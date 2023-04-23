@@ -10,13 +10,20 @@ body{
     background-color: #2795DB;
     display: flex;
     align-items: center;
-    justify-content: center;
+    width: 100vh;
+    height: 100vh;
+    justify-content: space-around;
+    flex-direction: row-reverse;
 
 }
 
+.google-logo{
+    width: 30px;
+}
+
 .conteiner{
-    width: 30%;
-    height: 70%;
+    width: 60%;
+    height: 85%;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -24,12 +31,17 @@ body{
     flex-direction: column;
     margin-top: 60px;
     border-radius: 40px;
+    border: solid saddlebrown;
+    margin-left: 100px;
+}
 
+.side-img{
+    margin-left: 600px;
 }
 
 h1{
 
-    margin-bottom: 60px;
+    margin-bottom: 20px;
     margin-top: 50px;
 
 }
@@ -38,13 +50,29 @@ h1{
     display: flex;
     margin-top: 15px;
     margin-bottom: 70px;
-    width: 150px;
-    justify-content: space-between;
+    width: 279px;
+    height: 170px;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
 }
 
-svg{
-    width: 30px;
-    fill: #263238;
+.text-above{
+    display: flex;
+    width: 279px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: solid #90CDF4;
+    border-radius: 20px;
+    background-color: #90CDF4;
+}
+
+.text-bellow{
+    margin-top: 10px;
+    color: #2795DB;
+    font-size: 15px;
+    width: 95%;
 }
 
 
@@ -65,10 +93,11 @@ input{
 }
 
 button{
-    height: 70px;
-    width: 259px;
+    height: 60px;
+    width: 279px;
     border-radius: 20px;
     margin-top: 45px;
+    margin-bottom: 20px;
     background-color: #90CDF4;
 }
 
@@ -89,4 +118,13 @@ span{
     width: 20px;
     padding: 0;
     
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.text-bellow a{
+    color: #2795DB;
 }
