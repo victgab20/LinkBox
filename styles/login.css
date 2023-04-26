@@ -21,7 +21,7 @@ body{
     width: 30px;
 }
 
-.conteiner{
+.container{
     width: 60%;
     height: 85%;
     background-color: #ffffff;
@@ -107,12 +107,12 @@ span{
     color: #252525;
 }
 
-.forms-conteiner{
+.forms-container{
     display: flex;
     align-items: center;
 }
 
-.forms-conteiner img{
+.forms-container img{
     position: relative;
     right: 50px;
     width: 20px;
