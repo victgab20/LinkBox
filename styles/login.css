@@ -1,20 +1,30 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Roboto, Arial, Helvetica, sans-serif;
+@import url("./inputButton.css");
 
+@import url("./button.css");
+
+:root {
+    --input-padding: 20px;
 }
 
 body{
     background-color: #2795DB;
     display: flex;
     align-items: center;
-    width: 100vh;
+    justify-content: center;
+    width: 100%;
     height: 100vh;
-    justify-content: space-around;
-    flex-direction: row-reverse;
+    gap: 80px;
+    /* flex-direction: row-reverse; */
 
+}
+
+.brand{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-weight: 300;
+    font-size: 30px;
 }
 
 .google-logo{
@@ -22,8 +32,7 @@ body{
 }
 
 .container{
-    width: 60%;
-    height: 85%;
+    width: 50%;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -31,99 +40,50 @@ body{
     flex-direction: column;
     margin-top: 60px;
     border-radius: 40px;
-    border: solid saddlebrown;
-    margin-left: 100px;
+    height: fit-content;
+    margin-bottom: 60px;
+    margin-right: 50px;
+    padding:70px;
+    gap:30px;
 }
 
 .side-img{
-    margin-left: 600px;
-}
-
-h1{
-
-    margin-bottom: 20px;
-    margin-top: 50px;
-
+  width: 50%;
 }
 
 .redes{
     display: flex;
-    margin-top: 15px;
-    margin-bottom: 70px;
     width: 279px;
-    height: 170px;
-    justify-content: space-around;
+    height: 60px;
+    justify-content: center;
     align-items: center;
+}
+
+.lin{
+    display: flex;
     flex-direction: column;
 }
 
-.text-above{
-    display: flex;
-    width: 279px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border: solid #90CDF4;
-    border-radius: 20px;
-    background-color: #90CDF4;
-}
-
-.text-bellow{
-    margin-top: 10px;
-    color: #2795DB;
-    font-size: 15px;
-    width: 95%;
-}
-
-
 form{
     display: flex;
+    gap:20px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 70%;
+    margin-top: 60px;
 }
 
 input{
-    margin: 20px;
     height: 50px;
-    width: 350px; 
+    width: 390px; 
     border-radius: 20px;
-    background-color: #F0E9E9;
+    border: none;
+    padding: 10px;
+    outline: 2px solid rgb(255, 255, 255);
+    background-color: #E8E8E8;
 }
 
-button{
-    height: 60px;
-    width: 279px;
-    border-radius: 20px;
-    margin-top: 45px;
-    margin-bottom: 20px;
-    background-color: #90CDF4;
-}
-
-span{
-    font-size: 30px;
-    color: #252525;
-}
-
-.forms-container{
-    display: flex;
-    align-items: center;
-}
-
-.forms-container img{
-    position: relative;
-    right: 50px;
-    width: 20px;
-    padding: 0;
-    
-}
-
-a{
-    text-decoration: none;
-    color: black;
-}
-
-.text-bellow a{
+.link-cadastro {
     color: #2795DB;
 }

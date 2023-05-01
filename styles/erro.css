@@ -1,28 +1,28 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Roboto, Arial, Helvetica, sans-serif;
-}
-
 body{
     background-color: #2795DB;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    height: 100vh;
+    gap: 50px;
+}
+
+section img {
+    user-select: none;
 }
 
 .logo{
     width: 80px;
     height: 80px;
 }
-header{
+
+.brand{
     display: flex;
-    margin-top: 50px;
+    gap: 20px;
 }
 
-header h1{
+.brand h1{
     width: 224px;
     height: 75px;
 

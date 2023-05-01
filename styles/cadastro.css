@@ -1,8 +1,8 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: Roboto, Arial, Helvetica, sans-serif;
+@import url("./inputButton.css");
+@import url("./button.css");
+
+:root {
+    --input-padding: 20px;
 }
 
 body{
@@ -15,26 +15,40 @@ section{
     width: 100%;
     height: 100vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 200px;
     align-items: center;
 }
 
 .container{
     background-color: #ffff;
-    width: 40%;
-    margin-left: 140px;
-    height: 80%;
+    /* width: 40%; */
+    width: fit-content;
+    /* height: 80%; */
+    height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 20px;
+    padding: 50px;
 
 }
 
+.logo {
+    width: 80px;
+    height: 80px;
+}
+
+.brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
 h1{
-    font-size: 60px;
-    margin-bottom: 50px; ;
+    font-size: 48px;
 }
 
 .img-form{
@@ -58,17 +72,23 @@ form{
 
 }
 
-input{
-    margin: 10px;
-    height: 50px;
-    width: 350px; 
-    border-radius: 20px;
-    background-color: #E8E8E8;
+.form-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
 }
 
-button{
-    height: 15%;
-    width: 40%;
+input{
+    height: 50px;
+    width: 100%;
+    border: none;
+}
+
+.regular-btn, .text-above{
+    height: 60px;
+    width: 240px;
+    border: none;
     border-radius: 20px;
     background-color: #90CDF4;
 }
@@ -76,33 +96,23 @@ button{
 
 .text-above{
     display: flex;
-    width: 105%;
-    justify-content: space-between;
+    gap: 20px;
+    justify-content: center;
     align-items: center;
-    padding: 10px;
-    border: solid #90CDF4;
-    border-radius: 20px;
-    background-color: #90CDF4;
 }
 
-.redes{
-    height: 20%;
+.slasla {
     display: flex;
-    justify-content: space-around;
     flex-direction: column;
-    margin-bottom: 50px;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
 }
 
-.text-bellow a{
-    color: #2795DB;
-}
 .text-bellow{
-    color: #2795DB;
     font-size: 15px;
-    width: 100%;
 }
 
-a{
-    text-decoration: none;
-    color: black;
+.link-login {
+    color: #2795DB;
 }

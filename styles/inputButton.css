@@ -1,0 +1,33 @@
+.forms-container{
+    position: relative;
+    width: 350px; 
+    border-radius: 20px;
+    padding: 0 0px;
+}
+
+.forms-container input{
+    background-color: #E8E8E8;
+    padding: var(--input-padding);
+    width: 100%;
+    border-radius: 20px;
+    outline: none;
+}
+
+.forms-container input:focus{
+    outline: 2px solid grey;
+}
+
+.icon-btn{
+    border: none;
+}
+
+.forms-container .material-symbols-outlined {
+    user-select: none;
+}
+
+.forms-container label>span, .icon-btn{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(calc(-1 * var(--input-padding)), -50%);
+}
