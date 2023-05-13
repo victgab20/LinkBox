@@ -2,10 +2,6 @@
 
 @import url("./button.css");
 
-:root {
-    --input-padding: 20px;
-}
-
 body{
     background-color: #2795DB;
     display: flex;
@@ -77,11 +73,6 @@ form{
 input{
     height: 50px;
     width: 390px; 
-    border-radius: 20px;
-    border: none;
-    padding: 10px;
-    outline: 2px solid rgb(255, 255, 255);
-    background-color: #E8E8E8;
 }
 
 .link-cadastro {
