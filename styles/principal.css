@@ -84,7 +84,7 @@ input{
 
 .main-container main {
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
 }
 
