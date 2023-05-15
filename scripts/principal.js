@@ -2,14 +2,18 @@ const links = [
     { name: "Google", url: "https://google.com/" }
 ]
 
+const getLinkImg = (link) => {
+    const faviconUrl = `https://www.google.com/s2/favicons?domain=${link.url}&sz=32`;
+    const img = document.createElement("img");
+    img.src = faviconUrl;
+    return img
+}
+
 const createLinkDataContainer = (link) => {
     const dataContainer = document.createElement("div");
     dataContainer.className = "link-data-container";
 
-    const linkImg = document.createElement("img");
-    linkImg.src = "imagem/Google logo.svg";
-    linkImg.alt = "Google logo";
-
+    const linkImg = getLinkImg(link);
     const infoContainer = createInfoContainer(link);
 
     dataContainer.appendChild(linkImg);
