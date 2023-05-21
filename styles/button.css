@@ -9,9 +9,6 @@
 
 .regular-btn:hover{
     background-color: #80BEEE;
-    /* background-color: #2795DB; */
-    /* background-color: #2795DB; */
-    /* color: white; */
     cursor: pointer;
     transition: .2s;
 }
@@ -22,4 +19,11 @@
     align-items: center;
     font-weight: 500;
     font-size: 17px;
+}
+
+
+@media(max-width: 315px){
+    .regular-btn{
+        width: 180px;
+    }
 }

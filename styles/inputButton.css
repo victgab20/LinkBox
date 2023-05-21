@@ -13,7 +13,6 @@
     background-color: #E8E8E8;
     padding: var(--input-padding);
     border: none;
-    /* outline: 2px solid rgb(255, 255, 255); */
     width: 100%;
     border-radius: 20px;
     outline: none;
@@ -36,4 +35,20 @@
     right: 0;
     top: 50%;
     transform: translate(calc(-1 * var(--input-padding)), -50%);
+}
+
+@media(max-width: 360px){
+    .input-container{
+        width: 300px; 
+    }
+}
+@media(max-width: 315px){
+    .input-container{
+        width: 280px; 
+    }
+}
+@media(max-width: 285px){
+    .input-container{
+        width: 250px; 
+    }
 }
