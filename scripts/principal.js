@@ -18,7 +18,7 @@ const createLinkDataContainer = (link) => {
 
     dataContainer.appendChild(linkImg);
     dataContainer.appendChild(infoContainer);
-
+    console.log(dataContainer)
     return dataContainer;
 }
 
@@ -72,7 +72,6 @@ const createLinkCard = (link) => {
     linkCard.className = "link-card";
     linkCard.appendChild(createLinkDataContainer(link));
     linkCard.appendChild(createLinkBtnsContainer(link));
-
     return linkCard;
 }
 
