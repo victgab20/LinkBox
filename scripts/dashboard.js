@@ -52,7 +52,10 @@ const createLinkBtnsContainer = () => {
         span.textContent = btnName;
 
         if(btnName === "delete"){
-            span.classList.add('teste')
+            span.setAttribute('onclick', 'deletar()')
+        }
+        if(btnName === "palette"){
+            span.setAttribute('onclick', 'changeColor()')
         }
 
         btn.appendChild(span)
@@ -83,6 +86,7 @@ const createLinkCard = (link) => {
 
 const main = document.querySelector("main");
 const addBtn = document.querySelector(".add-btn");
+//const card = document.querySelector('.link-card')
 
 addBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -96,6 +100,12 @@ const deletar = () => {
     childElement.remove()
 }
 
-const chageColor = () =>{
+const changeColor = () =>{
+
+    const cards = document.getElementsByClassName('link-card')
+    const card = Array.from(cards) 
+    console.log(card)
+    console.log(card[1].style.backgroundColor = 'blue')
+    //card2.links.colorBackground = "green"
 
 }
