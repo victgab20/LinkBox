@@ -1,5 +1,5 @@
 const links = [
-    { name: "Google", url: "https://google.com/" }
+    { name: "Google", url: "https://google.com/", colorBackground: "white" }
 ]
 
 const getLinkImg = (link) => {
@@ -51,6 +51,10 @@ const createLinkBtnsContainer = () => {
         span.className = "material-symbols-outlined";
         span.textContent = btnName;
 
+        if(btnName === "delete"){
+            span.classList.add('teste')
+        }
+
         btn.appendChild(span)
 
         return btn;
@@ -72,8 +76,10 @@ const createLinkCard = (link) => {
     linkCard.className = "link-card";
     linkCard.appendChild(createLinkDataContainer(link));
     linkCard.appendChild(createLinkBtnsContainer(link));
+    linkCard.style.backgroundColor = link.colorBackground
     return linkCard;
 }
+
 
 const main = document.querySelector("main");
 const addBtn = document.querySelector(".add-btn");
@@ -83,3 +89,13 @@ addBtn.addEventListener("click", (e) => {
 
     main.appendChild(createLinkCard(links[0]));
 })
+
+const deletar = () => {
+    const index = 2
+    const childElement = main.childNodes[index]
+    childElement.remove()
+}
+
+const chageColor = () =>{
+
+}
