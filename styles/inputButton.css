@@ -37,6 +37,20 @@
     transform: translate(calc(-1 * var(--input-padding)), -50%);
 }
 
+
+@media(max-width: 651px){
+
+    .input-container input{
+        background-color: #E8E8E8;
+        padding: var(--input-padding);
+        border: none;
+        width: 100%;
+        border-radius: 20px;
+        outline: none;
+    }
+
+}
+
 @media(max-width: 360px){
     .input-container{
         width: 300px; 
@@ -51,4 +65,5 @@
     .input-container{
         width: 250px; 
     }
+
 }
