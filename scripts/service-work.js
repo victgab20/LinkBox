@@ -15,6 +15,20 @@ self.addEventListener('install', (event) => {
   
   self.addEventListener('activate', (event) => {
     // Limpa os caches antigos se nescessario
+    event.waitUntil(
+      caches.keys().then(cacheNames => {
+          return Promise.all(
+              cacheNames.map(cacheName => {  
+                  if (cacheName.startsWith('my-cache')) {
+                      return caches.delete(cacheName);
+                  }
+
+              }).map(cacheNames =>{
+                  return caches.delete(cacheNames);
+              })
+          )
+      })
+    )
   });
   
   self.addEventListener('fetch', (event) => {
