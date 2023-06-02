@@ -1,9 +1,8 @@
-// Evento de instalação do Service Worker
+
 self.addEventListener('install', (event) => {
     event.waitUntil(
       caches.open('my-cache').then((cache) => {
         return cache.addAll([
-          // Aqui você pode adicionar os arquivos que deseja armazenar em cache
           '/',
           '/index.html',
           '/styles.css',
@@ -13,12 +12,11 @@ self.addEventListener('install', (event) => {
     );
   });
   
-  // Evento de ativação do Service Worker
+  
   self.addEventListener('activate', (event) => {
-    // Limpar caches antigos, se necessário
+    // Limpa os caches antigos se nescessario
   });
   
-  // Evento fetch
   self.addEventListener('fetch', (event) => {
     event.respondWith(
       caches.match(event.request).then((response) => {
