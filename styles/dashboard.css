@@ -147,10 +147,10 @@ main > .link-card:not(:last-child) {
     background-color: var(--light-bg-active-nav-link);
 }
 
-.trespontinhos{
+.menu-icon{
     display: none;
 }
-.hamburguer{
+.menu-hamburguer{
     display: none;
 }
 
@@ -168,10 +168,10 @@ footer{
     .btn{
         display: none;
     }
-    .trespontinhos{
+    .menu-icon{
         display: block;
     }
-    .hamburguer{
+    .menu-hamburguer{
         display: block;
     }
     nav {

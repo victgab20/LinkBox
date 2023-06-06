@@ -86,9 +86,15 @@ const createLinkCard = (link) => {
 
 const main = document.querySelector("main");
 const addBtn = document.querySelector(".add-btn");
+const addBtnMobile = document.querySelector(".add-btn-mobile");
 //const card = document.querySelector('.link-card')
 
 addBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    main.appendChild(createLinkCard(links[0]));
+})
+addBtnMobile.addEventListener("click", (e) => {
     e.preventDefault();
 
     main.appendChild(createLinkCard(links[0]));

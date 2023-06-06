@@ -95,7 +95,7 @@ form{
 
 .text-above{
     height: 60px;
-    width: 240px;
+    width: 279px;
     border: none;
     border-radius: 20px;
     background-color: #90CDF4;
@@ -123,6 +123,14 @@ form{
 
 .link-login {
     color: #2795DB;
+}
+
+.error small{
+    color: rgb(227, 65, 65);
+}
+.success small{
+    color: rgb(28, 206, 96);
+    display: none;
 }
 
 @media(max-width: 970px){
