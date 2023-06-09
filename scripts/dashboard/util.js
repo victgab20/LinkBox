@@ -1,3 +1,9 @@
+export const inputLinkInfo = () => {
+    const url = prompt("Url: ");
+    const name = prompt("Name: ");
+    return { name, url }
+}
+
 export const getLinkImg = (link) => {
     const faviconUrl = `https://www.google.com/s2/favicons?domain=${link.url}&sz=32`;
     const img = document.createElement("img");

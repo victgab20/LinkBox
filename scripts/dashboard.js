@@ -7,16 +7,24 @@ const links = [
 const addBtn = document.querySelector(".add-btn");
 const addBtnMobile = document.querySelector(".add-btn-mobile");
 
+const addLink = () => {
+    const link = util.inputLinkInfo();
+    links.push(link);
+    return link;
+}
+
 addBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
     const main = document.querySelector("main");
-    main.appendChild(util.createLinkCard(links[0]));
+    const newLink = addLink();
+    main.appendChild(util.createLinkCard(newLink));
 })
 
 addBtnMobile.addEventListener("click", (e) => {
     e.preventDefault();
 
     const main = document.querySelector("main");
-    main.appendChild(util.createLinkCard(links[0]));
+    const newLink = addLink();
+    main.appendChild(util.createLinkCard(newLink));
 })
