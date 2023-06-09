@@ -1,3 +1,5 @@
+import Link from "./Link.js";
+
 export const inputLinkInfo = () => {
     const url = prompt("Url: ");
     const name = prompt("Name: ");
@@ -98,4 +100,15 @@ export const changeColor = () =>{
     console.log(card)
     console.log(card[1].style.backgroundColor = 'blue')
     //card2.links.colorBackground = "green"
+}
+
+const createLink = () => {
+    const { name, url } = inputLinkInfo();
+    return new Link(name, url);
+}
+
+export const addLinkToUI = () => {
+    const main = document.querySelector("main");
+    const newLink = createLink();
+    main.appendChild(createLinkCard(newLink));
 }
