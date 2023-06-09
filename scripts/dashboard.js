@@ -1,16 +1,12 @@
+import Link from "./dashboard/Link.js";
 import * as util from "./dashboard/util.js";
-
-const links = [
-    { name: "Google", url: "https://google.com/", colorBackground: "white" }
-]
 
 const addBtn = document.querySelector(".add-btn");
 const addBtnMobile = document.querySelector(".add-btn-mobile");
 
 const addLink = () => {
-    const link = util.inputLinkInfo();
-    links.push(link);
-    return link;
+    const { name, url } = util.inputLinkInfo();
+    return new Link(name, url);
 }
 
 addBtn.addEventListener("click", (e) => {
