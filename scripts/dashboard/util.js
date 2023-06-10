@@ -5,7 +5,10 @@ export const getCardType = card => card.classList.contains("link-card") ? "link"
 
 export const inputLinkInfo = () => {
     const url = prompt("Url: ");
+    if (!url.trim()) return null;
     const name = prompt("Name: ");
+    if (!name.trim()) return null;
+
     return { name, url }
 }
 
@@ -88,12 +91,17 @@ export const changeColor = () =>{
 }
 
 const createLink = () => {
-    const { name, url } = inputLinkInfo();
-    return new Link(name, url);
+    const linkInfo = inputLinkInfo();
+    if (!linkInfo) return null;
+
+    return new Link(linkInfo.name, linkInfo.url);
 }
 
 export const addLinkToUI = () => {
     const main = document.querySelector("main");
     const newLink = createLink();
-    main.appendChild(createLinkCard(newLink));
+
+    if (newLink) {
+        main.appendChild(createLinkCard(newLink));
+    }
 }
