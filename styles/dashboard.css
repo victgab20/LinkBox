@@ -55,40 +55,13 @@ input{
     background-color: #E8E8E8;
 }
 
-.main-container {
-    display: flex;
-    background-color: #F4F4F4;
-    height: 100%;
-    overflow-y: hidden;
-}
-
-.sidebar-btn {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 5px;
-    padding: 12px;
-    font-size: small;
-}
-
-.main-container aside {
-    width: max-content;
-    justify-content: space-between;
-    height: 100%;
-    background-color: var(--accent-color);
-}
-
-.sidebar-btn {
-    user-select: none;
-    cursor: pointer;
-}
-
-.main-container main {
+main {
     width: 100%;
     overflow-y: auto;
     height: 100%;
 }
 
+main > header,
 .folder-card,
 .link-card {
     display: flex;
@@ -103,6 +76,7 @@ input{
     background-color: var(--light-bg-hover);
 }
 
+main > header,
 main > .folder-card:not(:last-child),
 main > .link-card:not(:last-child) {
     border-bottom: 1px solid #BBC8DC;
@@ -168,9 +142,6 @@ footer{
 
 @media(max-width: 651px){
     .brand{
-        display: none;
-    }
-    .main-container aside{
         display: none;
     }
     .btn{
