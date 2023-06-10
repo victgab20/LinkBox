@@ -1,3 +1,4 @@
+import Button from "./Button.js";
 import Link from "./Link.js";
 
 export const inputLinkInfo = () => {
@@ -47,25 +48,7 @@ export const createInfoContainer = (link) => {
 export const createLinkBtnsContainer = () => {
     let buttons = ["check_box_outline_blank", "content_copy", "content_cut", "expand_more", "palette", "edit", "delete"];
 
-    buttons = buttons.map((btnName) =>  {
-        let btn = document.createElement("div");
-        btn.className = "btn";
-
-        const span = document.createElement("span");
-        span.className = "material-symbols-outlined";
-        span.textContent = btnName;
-
-        if(btnName === "delete"){
-            span.setAttribute('onclick', 'deletar()')
-        }
-        if(btnName === "palette"){
-            span.setAttribute('onclick', 'changeColor()')
-        }
-
-        btn.appendChild(span)
-
-        return btn;
-    })
+    buttons = buttons.map(btnName => new Button(btnName).getElement())
 
     let btnsContainer = document.createElement("div");
     btnsContainer.classList.add("link-btns-container");
