@@ -10,6 +10,14 @@ searchBar.addEventListener("input", searchBarInputListenerFn);
 [addBtn, addBtnMobile].forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
-    util.addLinkToUI();
+
+    const answer = prompt("O que você quer adicionar?\n1 - Pasta\n2 - Link")
+    const itemType = ["folder", "link"][answer - 1]
+
+    if (itemType === "folder") {
+      util.addFolderToUI();
+    } else if (itemType === "link") {
+      util.addLinkToUI();
+    }
   });
 });

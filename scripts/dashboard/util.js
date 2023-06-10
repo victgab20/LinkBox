@@ -1,7 +1,15 @@
 import Button from "./Button.js";
+import Folder from "./Folder.js";
 import Link from "./Link.js";
 
 export const getCardType = card => card.classList.contains("link-card") ? "link" : "folder";
+
+export const inputFolderInfo = () => {
+    const name = prompt("Name: ");
+    if (!name.trim()) return null;
+
+    return { name }
+}
 
 export const inputLinkInfo = () => {
     const url = prompt("Url: ");
@@ -19,20 +27,38 @@ export const getLinkImg = (link) => {
     return img
 }
 
+const createFolderDataContainer = (folder) => {
+    const dataContainer = document.createElement("div");
+    dataContainer.className = "folder-data-container";
+
+    const span = document.createElement("span");
+    span.className = "material-symbols-outlined";
+    span.textContent = "folder";
+
+    const p = document.createElement("p");
+    p.className = "folder-name";
+    p.textContent = folder.name;
+
+    dataContainer.appendChild(span);
+    dataContainer.appendChild(p);
+
+    return dataContainer;
+}
+
 export const createLinkDataContainer = (link) => {
     const dataContainer = document.createElement("div");
     dataContainer.className = "link-data-container";
 
     const linkImg = getLinkImg(link);
-    const infoContainer = createInfoContainer(link);
+    const infoContainer = createLinkInfoContainer(link);
 
     dataContainer.appendChild(linkImg);
     dataContainer.appendChild(infoContainer);
-    console.log(dataContainer)
+
     return dataContainer;
 }
 
-export const createInfoContainer = (link) => {
+export const createLinkInfoContainer = (link) => {
     const linkInfoContainer = document.createElement("div");
     const linkName = document.createElement("p");
     const linkUrl = document.createElement("p");
@@ -50,13 +76,15 @@ export const createInfoContainer = (link) => {
     return linkInfoContainer;
 }
 
-export const createLinkBtnsContainer = () => {
-    let buttons = ["check_box_outline_blank", "content_copy", "content_cut", "expand_more", "palette", "edit", "delete"];
+const createBtnsContainer = (parentCardType, buttons) => {
+    if (!buttons) {
+        buttons = ["check_box_outline_blank", "content_copy", "content_cut", "expand_more", "palette", "edit", "delete"];
+    }
 
     buttons = buttons.map(btnName => new Button(btnName).getElement())
 
     let btnsContainer = document.createElement("div");
-    btnsContainer.classList.add("link-btns-container");
+    btnsContainer.classList.add(`${parentCardType}-btns-container`);
     btnsContainer.classList.add("btns-container");
 
     buttons.forEach((btn) => {
@@ -66,12 +94,30 @@ export const createLinkBtnsContainer = () => {
     return btnsContainer;
 }
 
+export const createLinkBtnsContainer = () => createBtnsContainer("link");
+
+export const createFolderBtnsContainer = () => createBtnsContainer("folder");
+
+const createItemCardFactory = (itemType, item) => {
+    return () => {
+        const card = document.createElement("div");
+        card.className = `${itemType}-card`;
+        card.style.backgroundColor = item.backgroundColor
+        return card;
+    }
+}
+
+export const createFolderCard = (folder) => {
+    const folderCard = createItemCardFactory("folder", folder)()
+    folderCard.appendChild(createFolderDataContainer(folder));
+    folderCard.appendChild(createFolderBtnsContainer(folder));
+    return folderCard;
+}
+
 export const createLinkCard = (link) => {
-    const linkCard = document.createElement("div");
-    linkCard.className = "link-card";
+    const linkCard = createItemCardFactory("link", link)()
     linkCard.appendChild(createLinkDataContainer(link));
     linkCard.appendChild(createLinkBtnsContainer(link));
-    linkCard.style.backgroundColor = link.colorBackground
     return linkCard;
 }
 
@@ -97,11 +143,39 @@ const createLink = () => {
     return new Link(linkInfo.name, linkInfo.url);
 }
 
-export const addLinkToUI = () => {
-    const main = document.querySelector("main");
-    const newLink = createLink();
+const createFolder = () => {
+    const folderInfo = inputFolderInfo();
+    if (!folderInfo) return null;
 
-    if (newLink) {
-        main.appendChild(createLinkCard(newLink));
+    return new Folder(folderInfo.name);
+}
+
+const createManageableItem = (itemType) => {
+    const creationStrategy = {
+        link: createLink,
+        folder: createFolder,
+    }[itemType];
+
+    if (creationStrategy) return creationStrategy();
+}
+
+const createCard = (itemType, itemInfo) => {
+    if (itemType === "link") {
+        return createLinkCard(itemInfo);
+    } else {
+        return createFolderCard(itemInfo);
     }
 }
+
+const addManageableItemToUI = (itemType) => {
+    const main = document.querySelector("main");
+    const newItem = createManageableItem(itemType);
+
+    if (newItem) {
+        main.appendChild(createCard(itemType, newItem));
+    }
+}
+
+export const addLinkToUI = () => addManageableItemToUI("link");
+
+export const addFolderToUI = () => addManageableItemToUI("folder");
