@@ -108,7 +108,8 @@ const createItemCardFactory = (itemType, item) => {
     return () => {
         const card = document.createElement("div");
         card.className = `${itemType}-card`;
-        card.style.backgroundColor = item.backgroundColor
+        card.style.backgroundColor = item.backgroundColor;
+        card.setAttribute(`data-${itemType}-id`, item.getId());
 
         card.appendChild(createDataContainer(itemType, item));
 
