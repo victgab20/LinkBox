@@ -102,6 +102,7 @@ input{
     background-color: var(--light-bg-hover);
 }
 
+main > .folder-card:not(:last-child),
 main > .link-card:not(:last-child) {
     border-bottom: 1px solid #BBC8DC;
 }
