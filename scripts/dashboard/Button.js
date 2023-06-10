@@ -41,13 +41,6 @@ class Button {
             }
         }
 
-        // if(btnName === "delete"){
-        //     span.setAttribute('onclick', 'deletar()')
-        // }
-        // if(btnName === "palette"){
-        //     span.setAttribute('onclick', 'changeColor()')
-        // }
-
         btn.appendChild(span)
 
         return btn;

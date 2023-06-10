@@ -1,4 +1,5 @@
 import Button from "./Button.js";
+import ButtonDelete from "./Button/ButtonDelete.js";
 import Folder from "./Folder.js";
 import Link from "./Link.js";
 
@@ -81,7 +82,14 @@ const createBtnsContainer = (parentCardType, buttons) => {
         buttons = ["check_box_outline_blank", "content_copy", "content_cut", "expand_more", "palette", "edit", "delete"];
     }
 
-    buttons = buttons.map(btnName => new Button(btnName).getElement())
+    buttons = buttons.map(btnName => {
+        switch (btnName) {
+            case "delete":
+                return new ButtonDelete().getElement()
+            default:
+                return new Button(btnName).getElement()
+        }
+    })
 
     let btnsContainer = document.createElement("div");
     btnsContainer.classList.add(`${parentCardType}-btns-container`);
@@ -126,14 +134,6 @@ const createItemCardFactory = (itemType, item) => {
 export const createFolderCard = (folder) => createItemCardFactory("folder", folder)();
 
 export const createLinkCard = (link) => createItemCardFactory("link", link)();
-
-
-export const deletar = () => {
-    const index = 2
-    const main = document.querySelector("main");
-    const childElement = main.childNodes[index]
-    childElement.remove()
-}
 
 export const changeColor = () =>{
     const cards = document.getElementsByClassName('link-card')
