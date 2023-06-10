@@ -1,6 +1,8 @@
 import Button from "./Button.js";
 import Link from "./Link.js";
 
+export const getCardType = card => card.classList.contains("link-card") ? "link" : "folder";
+
 export const inputLinkInfo = () => {
     const url = prompt("Url: ");
     const name = prompt("Name: ");
