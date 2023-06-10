@@ -4,6 +4,7 @@
 :root {
     --accent-color: #2795DB;
     --light-bg-hover: #DDE3EC;
+    --light-bg-hover-darker: #c2c8d1;
     --light-bg-hover-nav-link: #147cbd;
     --light-bg-active-nav-link: #1a75ae;
     --btn-transition-in: 0.2s;
@@ -96,6 +97,11 @@ input{
     padding: 8px 20px;
 }
 
+.folder-card:not(:first-child):hover,
+.link-card:hover {
+    background-color: var(--light-bg-hover);
+}
+
 main > .link-card:not(:last-child) {
     border-bottom: 1px solid #BBC8DC;
 }
@@ -135,7 +141,7 @@ main > .link-card:not(:last-child) {
 
 .btn:hover {
     cursor: pointer;
-    background-color: var(--light-bg-hover);
+    background-color: var(--light-bg-hover-darker);
     transition: var(--btn-transition-out);
 }
 
