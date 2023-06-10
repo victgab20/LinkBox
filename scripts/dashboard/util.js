@@ -91,35 +91,41 @@ const createBtnsContainer = (parentCardType, buttons) => {
         btnsContainer.appendChild(btn)
     })
 
+    btnsContainer.classList.add("hidden");
+
     return btnsContainer;
 }
 
-export const createLinkBtnsContainer = () => createBtnsContainer("link");
-
-export const createFolderBtnsContainer = () => createBtnsContainer("folder");
+const createDataContainer = (itemType, item) => {
+  if (itemType === "folder") {
+    return createFolderDataContainer(item);
+  } else {
+    return createLinkDataContainer(item);
+  }
+};
 
 const createItemCardFactory = (itemType, item) => {
     return () => {
         const card = document.createElement("div");
         card.className = `${itemType}-card`;
         card.style.backgroundColor = item.backgroundColor
+
+        card.appendChild(createDataContainer(itemType, item));
+
+        const btnsContainer = createBtnsContainer(itemType);
+        card.appendChild(btnsContainer);
+
+        card.addEventListener("mouseout", () => btnsContainer.classList.add("hidden"));
+        card.addEventListener("mouseover", () => btnsContainer.classList.remove("hidden"));
+
         return card;
     }
 }
 
-export const createFolderCard = (folder) => {
-    const folderCard = createItemCardFactory("folder", folder)()
-    folderCard.appendChild(createFolderDataContainer(folder));
-    folderCard.appendChild(createFolderBtnsContainer(folder));
-    return folderCard;
-}
+export const createFolderCard = (folder) => createItemCardFactory("folder", folder)();
 
-export const createLinkCard = (link) => {
-    const linkCard = createItemCardFactory("link", link)()
-    linkCard.appendChild(createLinkDataContainer(link));
-    linkCard.appendChild(createLinkBtnsContainer(link));
-    return linkCard;
-}
+export const createLinkCard = (link) => createItemCardFactory("link", link)();
+
 
 export const deletar = () => {
     const index = 2
