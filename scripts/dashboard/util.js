@@ -1,7 +1,38 @@
 import Button from "./Button.js";
 import ButtonDelete from "./Button/ButtonDelete.js";
+import ButtonSelect from "./Button/ButtonSelect.js";
 import Folder from "./Folder.js";
 import Link from "./Link.js";
+
+export const isCardSelected = (card) => {
+    return card.getAttribute("data-card-selected") !== null;
+}
+
+const selectCardWithoutEventDispatch = (card) => {
+    card.setAttribute("data-card-selected", "");
+}
+
+const unselectCardWithoutEventDispatch = (card) => {
+    card.removeAttribute("data-card-selected");
+}
+
+export const selectCard = (card) => {
+    selectCardWithoutEventDispatch(card);
+    dispatchCardEvent(new CustomEvent("custom:cardSelected", { detail: { card } }))
+}
+
+export const unselectCard = (card) => {
+    unselectCardWithoutEventDispatch(card);
+    dispatchCardEvent(new CustomEvent("custom:cardUnselected", { detail: { card } }))
+}
+
+export const toggleCardSelection = (card) => {
+    if (isCardSelected(card)) {
+        unselectCard(card);
+    } else {
+        selectCard(card);
+    }
+}
 
 export const getCardType = card => card.classList.contains("link-card") ? "link" : "folder";
 
@@ -84,6 +115,8 @@ const createBtnsContainer = (parentCardType, buttons) => {
 
     buttons = buttons.map(btnName => {
         switch (btnName) {
+            case "check_box_outline_blank":
+                return new ButtonSelect().getElement()
             case "delete":
                 return new ButtonDelete().getElement()
             default:
@@ -126,6 +159,7 @@ const createItemCardFactory = (itemType, item) => {
 
         card.addEventListener("mouseout", () => btnsContainer.classList.add("hidden"));
         card.addEventListener("mouseover", () => btnsContainer.classList.remove("hidden"));
+        unselectCardWithoutEventDispatch(card);
 
         return card;
     }
@@ -172,6 +206,11 @@ const createCard = (itemType, itemInfo) => {
     } else {
         return createFolderCard(itemInfo);
     }
+}
+
+export const addEventListenerToCardContainer = (eventName, fn) => {
+    const cardContainer = document.querySelector("main");
+    cardContainer.addEventListener(eventName, fn);
 }
 
 export const dispatchCardEvent = event => {

@@ -22,16 +22,37 @@ searchBar.addEventListener("input", searchBarInputListenerFn);
   });
 });
 
-const main = document.querySelector("main");
 const emptyFolderMessage = document.querySelector(".empty-folder-message");
 const showEmptyFolderMessage = () => emptyFolderMessage.classList.remove("hidden");
 const hideEmptyFolderMessage = () => emptyFolderMessage.classList.add("hidden");
 
-main.addEventListener("custom:cardAdded", () => hideEmptyFolderMessage());
+util.addEventListenerToCardContainer("custom:cardAdded", () => hideEmptyFolderMessage());
 
-main.addEventListener("custom:cardRemoved", event => {
+util.addEventListenerToCardContainer("custom:cardRemoved", event => {
   if (event.detail.allCards.length == 0) showEmptyFolderMessage();
 });
+
+util.addEventListenerToCardContainer("custom:cardSelected", event => {
+  event.detail.card.classList.add("card-selected");
+})
+
+util.addEventListenerToCardContainer("custom:cardUnselected", event => {
+  event.detail.card.classList.remove("card-selected");
+})
+
+util.addEventListenerToCardContainer("custom:cardAdded", event => {
+  const { card: clickedCard  } = event.detail;
+
+  clickedCard.addEventListener("click", () => {
+    const allCards = document.querySelectorAll(".link-card, .folder-card");
+
+    for (let card of allCards) {
+      util.unselectCard(card);
+    }
+
+    util.selectCard(clickedCard);
+  })
+})
 
 const allCards = document.querySelectorAll(".link-card, .folder-card");
 

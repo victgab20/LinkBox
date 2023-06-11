@@ -74,6 +74,7 @@ main > header,
     padding: 8px 20px;
 }
 
+.card-selected,
 .folder-card:not(:first-child):hover,
 .link-card:hover {
     background-color: var(--light-bg-hover);
