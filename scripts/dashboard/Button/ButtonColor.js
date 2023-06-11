@@ -73,7 +73,7 @@ class ButtonColor extends Button {
 
     onRemove() {
         this.#colorInputEventListeners.forEach(({ type, listener }) => {
-            console.log(this.#getColorInput().removeEventListener(type, listener));
+            this.#getColorInput().removeEventListener(type, listener);
         })
     }
 }
