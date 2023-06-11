@@ -123,7 +123,7 @@ export const createLinkInfoContainer = (link) => {
 
 const createBtnsContainer = (parentCardType, buttons) => {
     if (!buttons) {
-        buttons = ["check_box_outline_blank", "content_copy", "content_cut", "expand_more", "palette", "edit", "delete"];
+        buttons = ["check_box_outline_blank", "content_copy", "content_cut", "palette", "edit", "delete"];
     }
 
     buttons = buttons.map(btnName => {
