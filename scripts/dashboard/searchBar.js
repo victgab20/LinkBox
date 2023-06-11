@@ -1,4 +1,4 @@
-import { getCardType } from "./util.js";
+import { getAllCards, getCardType } from "./util.js";
 
 const getFolderInfoByCard = (card) => {
     const nameTag = card.querySelector(".folder-name");
@@ -36,7 +36,7 @@ const filterOutUndefined = arr => arr.filter(val => val !== undefined);
 
 export const searchBarInputListenerFn = event => {
     const query = event.target.value
-    const cards = document.querySelectorAll(".folder-card, .link-card");
+    const cards = getAllCards();
 
     [...cards].forEach(card => {
         const { name, url } = getInfoByCard(card);

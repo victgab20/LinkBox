@@ -26,12 +26,25 @@ export const unselectCard = (card) => {
     dispatchCardEvent(new CustomEvent("custom:cardUnselected", { detail: { card } }))
 }
 
+export const selectAllCards = () => getAllCards().forEach(unselectCard);
+
+export const unselectAllCards = () => getAllCards().forEach(unselectCard);
+
 export const toggleCardSelection = (card) => {
     if (isCardSelected(card)) {
         unselectCard(card);
     } else {
         selectCard(card);
     }
+}
+
+export const getAllCards = () => {
+    return document.querySelectorAll(".folder-card, .link-card");
+}
+
+export const elementIsCard = (element) => {
+    const { classList } = element
+    return classList.contains("folder-card") || classList.contains("link-card");
 }
 
 export const getCardType = card => card.classList.contains("link-card") ? "link" : "folder";

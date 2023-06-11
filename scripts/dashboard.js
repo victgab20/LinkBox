@@ -44,16 +44,16 @@ util.addEventListenerToCardContainer("custom:cardAdded", event => {
   const { card: clickedCard  } = event.detail;
 
   clickedCard.addEventListener("click", () => {
-    const allCards = document.querySelectorAll(".link-card, .folder-card");
-
-    for (let card of allCards) {
-      util.unselectCard(card);
-    }
-
+    util.unselectAllCards();
     util.selectCard(clickedCard);
   })
 })
 
-const allCards = document.querySelectorAll(".link-card, .folder-card");
+document.querySelector("main").addEventListener("click", event => {
+  const element = event.target;
+  if (!util.elementIsCard(element)) util.unselectAllCards();
+})
+
+const allCards = util.getAllCards();
 
 if (allCards.length == 0) showEmptyFolderMessage();
