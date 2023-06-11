@@ -21,3 +21,18 @@ searchBar.addEventListener("input", searchBarInputListenerFn);
     }
   });
 });
+
+const main = document.querySelector("main");
+const emptyFolderMessage = document.querySelector(".empty-folder-message");
+const showEmptyFolderMessage = () => emptyFolderMessage.classList.remove("hidden");
+const hideEmptyFolderMessage = () => emptyFolderMessage.classList.add("hidden");
+
+main.addEventListener("custom:cardAdded", () => hideEmptyFolderMessage());
+
+main.addEventListener("custom:cardRemoved", event => {
+  if (event.detail.allCards.length == 0) showEmptyFolderMessage();
+});
+
+const allCards = document.querySelectorAll(".link-card, .folder-card");
+
+if (allCards.length == 0) showEmptyFolderMessage();

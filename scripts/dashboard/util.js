@@ -174,12 +174,23 @@ const createCard = (itemType, itemInfo) => {
     }
 }
 
+export const dispatchCardEvent = event => {
+    const main = document.querySelector("main");
+    main.dispatchEvent(event);
+}
+
 const addManageableItemToUI = (itemType) => {
     const main = document.querySelector("main");
     const newItem = createManageableItem(itemType);
 
     if (newItem) {
-        main.appendChild(createCard(itemType, newItem));
+        const card = createCard(itemType, newItem)
+
+        main.appendChild(card);
+
+        dispatchCardEvent(new CustomEvent("custom:cardAdded", {
+            detail: { type: itemType, item: newItem, card }
+        }))
     }
 }
 
