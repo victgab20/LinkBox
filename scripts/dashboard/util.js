@@ -256,9 +256,14 @@ const createCard = (itemType, itemInfo) => {
     }
 }
 
-export const addEventListenerToCardContainer = (eventName, fn) => {
+export const addEventListenerToCardContainer = (eventName, fn, options) => {
     const cardContainer = document.querySelector("main");
-    cardContainer.addEventListener(eventName, fn);
+    cardContainer.addEventListener(eventName, fn, options);
+}
+
+export const removeEventListenerFromCardContainer = (eventName, fn, options) => {
+    const cardContainer = document.querySelector("main");
+    cardContainer.removeEventListener(eventName, fn, options);
 }
 
 export const dispatchCardEvent = event => {

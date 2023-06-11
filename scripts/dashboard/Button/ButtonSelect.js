@@ -1,5 +1,5 @@
 import Button from "../Button.js";
-import { addEventListenerToCardContainer, isCardSelected, selectCard, unselectCard } from "../util.js";
+import * as util from "../util.js";
 
 class ButtonSelect extends Button {
     #iconSelected;
@@ -11,12 +11,19 @@ class ButtonSelect extends Button {
         super(selected ? iconSelected : iconUnselected);
         this.#iconSelected = iconSelected;
         this.#iconUnselected = iconUnselected;
-        addEventListenerToCardContainer("custom:cardSelected", e => { this.#updateIcon() });
-        addEventListenerToCardContainer("custom:cardUnselected", e => { this.#updateIcon() });
+
+        const eventListenerFn = _ => { this.#updateIcon() };
+        util.addEventListenerToCardContainer("custom:cardSelected", eventListenerFn);
+        util.addEventListenerToCardContainer("custom:cardUnselected", eventListenerFn);
+
+        this.onRemove = () => {
+            util.removeEventListenerFromCardContainer("custom:cardSelected", eventListenerFn)
+            util.removeEventListenerFromCardContainer("custom:cardUnselected", eventListenerFn)
+        }
     }
 
     #isSelected() {
-        return isCardSelected(this.getContainerCard());
+        return util.isCardSelected(this.getContainerCard());
     }
 
     #updateIcon() {
@@ -24,12 +31,12 @@ class ButtonSelect extends Button {
     }
 
     #select() {
-        selectCard(this.getContainerCard());
+        util.selectCard(this.getContainerCard());
         this.#updateIcon();
     }
 
     #unselect() {
-        unselectCard(this.getContainerCard());
+        util.unselectCard(this.getContainerCard());
         this.#updateIcon();
     }
 

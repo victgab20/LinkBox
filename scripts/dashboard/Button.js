@@ -1,5 +1,5 @@
 import { querySelectorUpwards } from "../Util/querySelectorUpwards.js";
-import { getItemFromCard } from "./util.js";
+import { addEventListenerToCardContainer, getItemFromCard } from "./util.js";
 
 class Button {
     #icon;
@@ -8,6 +8,13 @@ class Button {
     constructor(icon) {
         this.#element = this.#createElement();
         this.setIcon(icon);
+
+        addEventListenerToCardContainer("custom:cardRemoved", _ => {
+            if (!this.getContainerCard()) {
+                if (this.onRemove) this.onRemove();
+                delete this;
+            }
+        });
     }
 
     setIcon(icon) {

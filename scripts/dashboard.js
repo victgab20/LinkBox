@@ -42,7 +42,7 @@ util.addEventListenerToCardContainer("custom:cardUnselected", event => {
 })
 
 util.addEventListenerToCardContainer("custom:cardAdded", event => {
-  const { card: clickedCard  } = event.detail;
+  const { card: clickedCard } = event.detail;
 
   clickedCard.addEventListener("click", () => {
     util.unselectAllCards();
