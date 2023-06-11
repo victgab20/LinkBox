@@ -40,9 +40,11 @@ class Button {
         span.className = "material-symbols-outlined";
         span.textContent = this.getIcon();
 
-        btn.onclick = (...args) => {
+        btn.onclick = (event) => {
+            event.stopPropagation();
+
             if (this.onClick) {
-                return this.onClick(...args);
+                return this.onClick(event);
             }
         }
 

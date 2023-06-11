@@ -41,8 +41,7 @@ class ButtonSelect extends Button {
         }
     }
 
-    onClick(event) {
-        event.stopPropagation();
+    onClick() {
         this.#toggleSelection();
     }
 }
