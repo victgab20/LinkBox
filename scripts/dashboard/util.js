@@ -1,5 +1,6 @@
 import Button from "./Button.js";
 import ButtonDelete from "./Button/ButtonDelete.js";
+import ButtonEdit from "./Button/ButtonEdit.js";
 import ButtonSelect from "./Button/ButtonSelect.js";
 import Folder from "./Folder.js";
 import Link from "./Link.js";
@@ -49,6 +50,39 @@ export const elementIsCard = (element) => {
 
 export const getCardType = card => card.classList.contains("link-card") ? "link" : "folder";
 
+export const getItemFromCard = card => {
+    const type = getCardType(card);
+    const id = parseInt(card.getAttribute(`data-${type}-id`));
+    const item = type === "folder" ? Folder.getById(id) : Link.getById(id);
+    return item
+}
+
+const updateFolderCard = (card) => {
+    const { name } = getItemFromCard(card);
+    card.querySelector(".folder-name").textContent = name;
+}
+
+const createLinkImgSrc = (link) => {
+    return `https://www.google.com/s2/favicons?domain=${link.url}&sz=32`;;
+}
+
+const updateLinkCard = (card) => {
+    const link = getItemFromCard(card);
+    card.querySelector("img").src = createLinkImgSrc(link);
+    card.querySelector(".link-name").textContent = link.name;
+    card.querySelector(".link-url").textContent = link.url;
+}
+
+export const updateCard = card => {
+    const type = getCardType(card);
+
+    if (type === "link") {
+        updateLinkCard(card);
+    } else {
+        updateFolderCard(card);
+    }
+}
+
 export const inputFolderInfo = () => {
     const name = prompt("Name: ");
     if (!name.trim()) return null;
@@ -66,9 +100,8 @@ export const inputLinkInfo = () => {
 }
 
 export const getLinkImg = (link) => {
-    const faviconUrl = `https://www.google.com/s2/favicons?domain=${link.url}&sz=32`;
     const img = document.createElement("img");
-    img.src = faviconUrl;
+    img.src = createLinkImgSrc(link);
     return img
 }
 
@@ -130,6 +163,8 @@ const createBtnsContainer = (parentCardType, buttons) => {
         switch (btnName) {
             case "check_box_outline_blank":
                 return new ButtonSelect().getElement()
+            case "edit":
+                return new ButtonEdit().getElement()
             case "delete":
                 return new ButtonDelete().getElement()
             default:

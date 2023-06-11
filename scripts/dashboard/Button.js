@@ -1,4 +1,5 @@
 import { querySelectorUpwards } from "../Util/querySelectorUpwards.js";
+import { getItemFromCard } from "./util.js";
 
 class Button {
     #icon;
@@ -21,6 +22,10 @@ class Button {
 
     getElement() {
         return this.#element;
+    }
+
+    getAssociatedItem() {
+        return getItemFromCard(this.getContainerCard());
     }
 
     getContainerCard() {

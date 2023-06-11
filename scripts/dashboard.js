@@ -1,3 +1,4 @@
+import Link from "./dashboard/Link.js";
 import { searchBarInputListenerFn } from "./dashboard/searchBar.js";
 import * as util from "./dashboard/util.js";
 
