@@ -1,16 +1,16 @@
-class ManeagleItem {
+class ManageableItem {
     static #items = [];
     static #currentId = 0;
     #id;
 
     constructor() {
-        ManeagleItem.#items.push(this);
-        this.#id = ManeagleItem.#currentId;
-        ManeagleItem.#currentId++;
+        ManageableItem.#items.push(this);
+        this.#id = ManageableItem.#currentId;
+        ManageableItem.#currentId++;
     }
 
     remove() {
-        ManeagleItem.#items = ManeagleItem.#items.filter(item => item !== this);
+        ManageableItem.#items = ManageableItem.#items.filter(item => item !== this);
     }
 
     getId() {
@@ -18,8 +18,8 @@ class ManeagleItem {
     }
 
     static getById(id) {
-        return ManeagleItem.#items.find(item => item.getId() === id);
+        return ManageableItem.#items.find(item => item.getId() === id);
     }
 }
 
-export default ManeagleItem;
+export default ManageableItem;

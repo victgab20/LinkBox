@@ -1,6 +1,6 @@
-import ManeagleItem from "./ManageableItem.js";
+import ManageableItem from "./ManageableItem.js";
 
-class Link extends ManeagleItem {
+class Link extends ManageableItem {
     constructor(name, url, colorBackground) {
         super();
         this.name = name;

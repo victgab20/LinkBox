@@ -1,6 +1,6 @@
-import ManeagleItem from "./ManageableItem.js";
+import ManageableItem from "./ManageableItem.js";
 
-class Folder extends ManeagleItem {
+class Folder extends ManageableItem {
     #children = [];
 
     constructor(name, children) {
