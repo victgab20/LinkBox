@@ -3,10 +3,11 @@ import ManageableItem from "./ManageableItem.js";
 class Folder extends ManageableItem {
     #children = [];
 
-    constructor(name, children) {
+    constructor(name, backgroundColor, children) {
         super();
 
         this.name = name;
+        this.backgroundColor = backgroundColor
 
         if (Array.isArray(children)) {
             this.#setChildren(children);

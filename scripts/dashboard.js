@@ -34,11 +34,15 @@ util.addEventListenerToCardContainer("custom:cardRemoved", event => {
 });
 
 util.addEventListenerToCardContainer("custom:cardSelected", event => {
-  event.detail.card.classList.add("card-selected");
+  const { card } = event.detail;
+  card.style.backgroundColor = "";
+  card.classList.add("card-selected");
 })
 
 util.addEventListenerToCardContainer("custom:cardUnselected", event => {
-  event.detail.card.classList.remove("card-selected");
+  const { card } = event.detail;
+  card.classList.remove("card-selected");
+  util.updateCard(card);
 })
 
 util.addEventListenerToCardContainer("custom:cardAdded", event => {

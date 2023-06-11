@@ -135,6 +135,17 @@ main > .link-card:not(:last-child) {
     transition: var(--btn-transition-out);
 }
 
+.color-btn {
+    position: relative;
+}
+
+.color-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
 .nav-btn:hover {
     background-color: var(--light-bg-hover-nav-link);
 }

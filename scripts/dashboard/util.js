@@ -1,4 +1,5 @@
 import Button from "./Button.js";
+import ButtonColor from "./Button/ButtonColor.js";
 import ButtonDelete from "./Button/ButtonDelete.js";
 import ButtonEdit from "./Button/ButtonEdit.js";
 import ButtonSelect from "./Button/ButtonSelect.js";
@@ -71,6 +72,9 @@ const updateLinkCard = (card) => {
     card.querySelector("img").src = createLinkImgSrc(link);
     card.querySelector(".link-name").textContent = link.name;
     card.querySelector(".link-url").textContent = link.url;
+    if (!isCardSelected(card)) {
+        card.style.backgroundColor = link.backgroundColor;
+    }
 }
 
 export const updateCard = card => {
@@ -163,6 +167,8 @@ const createBtnsContainer = (parentCardType, buttons) => {
         switch (btnName) {
             case "check_box_outline_blank":
                 return new ButtonSelect().getElement()
+            case "palette":
+                return new ButtonColor().getElement()
             case "edit":
                 return new ButtonEdit().getElement()
             case "delete":
