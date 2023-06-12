@@ -1,8 +1,9 @@
-import Link from "./dashboard/Link.js";
+import DashboardState from "./dashboard/DashboardState.js";
 import { searchBarInputListenerFn } from "./dashboard/searchBar.js";
 import * as util from "./dashboard/util.js";
 
 const searchBar = document.querySelector("#inputPesquisa");
+const goBackBtn = document.querySelector(".go-back-btn");
 const addBtn = document.querySelector(".add-btn");
 const addBtnMobile = document.querySelector(".add-btn-mobile");
 
@@ -22,6 +23,16 @@ searchBar.addEventListener("input", searchBarInputListenerFn);
     }
   });
 });
+
+goBackBtn.addEventListener("click", (e) => {
+  const dashboardState = new DashboardState();
+  const currentFolder = dashboardState.getCurrentFolder();
+  const parent = currentFolder.getParent();
+
+  if (parent) {
+    dashboardState.setCurrentFolder(parent);
+  }
+})
 
 const emptyFolderMessage = document.querySelector(".empty-folder-message");
 const showEmptyFolderMessage = () => emptyFolderMessage.classList.remove("hidden");
@@ -57,6 +68,21 @@ util.addEventListenerToCardContainer("custom:cardAdded", event => {
 document.querySelector("main").addEventListener("click", event => {
   const element = event.target;
   if (!util.elementIsCard(element)) util.unselectAllCards();
+})
+
+document.addEventListener("custom:currentFolderChanged", event => {
+  const { currentFolder } = event.detail;
+  const childItems = currentFolder.getChildren();
+  const allCards = util.getAllCards();
+
+  allCards.forEach(util.removeCardFromUI);
+  childItems.forEach(util.addItemToUI);
+
+  if (currentFolder.isRoot()) {
+    goBackBtn.classList.add("hidden");
+  } else {
+    goBackBtn.classList.remove("hidden");
+  }
 })
 
 const allCards = util.getAllCards();

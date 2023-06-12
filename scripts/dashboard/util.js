@@ -3,6 +3,7 @@ import ButtonColor from "./Button/ButtonColor.js";
 import ButtonDelete from "./Button/ButtonDelete.js";
 import ButtonEdit from "./Button/ButtonEdit.js";
 import ButtonSelect from "./Button/ButtonSelect.js";
+import DashboardState from "./DashboardState.js";
 import Folder from "./Folder.js";
 import Link from "./Link.js";
 
@@ -55,12 +56,27 @@ export const getItemFromCard = card => {
     const type = getCardType(card);
     const id = parseInt(card.getAttribute(`data-${type}-id`));
     const item = type === "folder" ? Folder.getById(id) : Link.getById(id);
-    return item
+    return item;
+}
+
+export const getCardFromItem = item => {
+    const itemType = item instanceof Link ? "link" : "folder";
+    const itemId = item.getId();
+
+    for (const card of getAllCards()) {
+        let dataId = card.getAttribute(`data-${itemType}-id`);
+
+        if (dataId && parseInt(dataId) === itemId) {
+            return card;
+        }
+    }
+
+    return null;
 }
 
 const updateFolderCard = (card) => {
-    const { name } = getItemFromCard(card);
-    card.querySelector(".folder-name").textContent = name;
+    const item = getItemFromCard(card);
+    card.querySelector(".folder-name").textContent = item.name;
 }
 
 const createLinkImgSrc = (link) => {
@@ -277,14 +293,40 @@ export const dispatchCardEvent = event => {
     main.dispatchEvent(event);
 }
 
-const addManageableItemToUI = (itemType) => {
+const openFolder = folder => {
+    const dashboardState = new DashboardState();
+    dashboardState.setCurrentFolder(folder)
+}
+
+const doubleClickCardFn = card => {
+    const item = getItemFromCard(card);
+
+    if (item instanceof Folder) {
+        openFolder(item);
+    }
+}
+
+const addManageableItemToUI = (itemType, newItem) => {
     const main = document.querySelector("main");
-    const newItem = createManageableItem(itemType);
+    newItem = newItem ?? createManageableItem(itemType);
 
     if (newItem) {
+        const dashboardState = new DashboardState();
+        const currentFolder = dashboardState.getCurrentFolder();
+
+        if (!currentFolder.contains(newItem)) {
+            currentFolder.addChild(newItem);
+            newItem.setParent(currentFolder);
+        }
+
         const card = createCard(itemType, newItem)
 
         main.appendChild(card);
+        card.addEventListener("dblclick", ({ target }) => {
+            if (target === card) {
+                doubleClickCardFn(card)
+            }
+        });
 
         dispatchCardEvent(new CustomEvent("custom:cardAdded", {
             detail: { type: itemType, item: newItem, card }
@@ -292,6 +334,37 @@ const addManageableItemToUI = (itemType) => {
     }
 }
 
-export const addLinkToUI = () => addManageableItemToUI("link");
+export const removeCardFromUI = (card) => {
+    const container = card.parentElement;
+    const filteredContainerChildren = [...container.children].filter(child => child !== card);
+    container.replaceChildren(...filteredContainerChildren);
+    const cardType = getCardType(card);
+    const id = parseInt(card.getAttribute(`data-${cardType}-id`));
+    const item = cardType == "link" ? Link.getById(id) : Folder.getById(id)
 
-export const addFolderToUI = () => addManageableItemToUI("folder");
+    dispatchCardEvent(new CustomEvent("custom:cardRemoved", {
+        detail: { type: cardType, item, card, allCards: getAllCards() }
+    }))
+}
+
+const removeManageableItemFromUI = (item) => {
+    const card = getCardFromItem(item);
+
+    if (card) {
+        removeCardFromUI(card);
+    }
+}
+
+export const addLinkToUI = (link) => addManageableItemToUI("link", link);
+
+export const addFolderToUI = (folder) => addManageableItemToUI("folder", folder);
+
+export const addItemToUI = (item) => {
+    if (item instanceof Link) {
+        addLinkToUI(item);
+    } else {
+        addFolderToUI(item);
+    }
+}
+
+export const removeItemFromUI = removeManageableItemFromUI;

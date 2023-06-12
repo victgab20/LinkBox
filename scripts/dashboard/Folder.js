@@ -14,6 +14,10 @@ class Folder extends ManageableItem {
         }
     }
 
+    isRoot() {
+        return !this.getParent();
+    }
+
     #setChildren(children) {
         this.#children = children
     }
@@ -28,6 +32,14 @@ class Folder extends ManageableItem {
 
     addChild(child) {
         this.getChildren().push(child);
+    }
+
+    contains(item) {
+        for (const child of this.getChildren()) {
+            if (child === item) return true;
+        }
+
+        return false;
     }
 }
 

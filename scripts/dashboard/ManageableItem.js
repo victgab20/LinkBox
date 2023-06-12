@@ -1,12 +1,21 @@
 class ManageableItem {
     static #items = [];
     static #currentId = 0;
+    #parent;
     #id;
 
     constructor() {
         ManageableItem.#items.push(this);
         this.#id = ManageableItem.#currentId;
         ManageableItem.#currentId++;
+    }
+
+    setParent(parent) {
+        this.#parent = parent;
+    }
+
+    getParent() {
+        return this.#parent;
     }
 
     remove() {

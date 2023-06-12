@@ -103,6 +103,11 @@ main > .link-card:not(:last-child) {
     gap: 20px;
 }
 
+.link-card,
+.folder-card {
+    user-select: none;
+}
+
 .folder-name,
 .link-name {
     font-size: 18px;
