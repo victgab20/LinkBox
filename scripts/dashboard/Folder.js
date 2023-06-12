@@ -14,6 +14,12 @@ class Folder extends ManageableItem {
         }
     }
 
+    clone() {
+        const clonedFolder = new Folder(this.name, this.backgroundColor, this.getChildren());
+        clonedFolder.setParent(this.getParent());
+        return clonedFolder;
+    }
+
     isRoot() {
         return !this.getParent();
     }

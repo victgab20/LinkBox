@@ -43,12 +43,23 @@
     </nav>
 
     <main>
-        <header>
-            <div class="btn go-back-btn hidden">
-                <span class="material-symbols-outlined">arrow_back</span>
+        <header class="cards-header">
+            <div class="cards-header-left">
+                <div class="btn go-back-btn hidden">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </div>
             </div>
-            <div class="btn add-btn">
-                <span class="material-symbols-outlined">add</span>
+            <div class="cards-header-right">
+                <div class="btn cancel-paste-btn hidden">
+                    <span class="material-symbols-outlined">cancel</span>
+                </div>
+                <div class="btn paste-btn hidden">
+                    <span class="material-symbols-outlined">content_paste</span>
+                </div>
+                <div class="btn add-btn">
+                    <span class="material-symbols-outlined">add</span>
+                </div>
+                <p class="current-folder-name hidden"></p>
             </div>
         </header>
         <h2 class="empty-folder-message hidden">
@@ -56,8 +67,23 @@
             <br>
             Adicione um link ou uma pasta clicando no botão +
         </h2>
+        <div class="cards-container hidden"></div>
+        <footer class="cards-footer hidden">
+            <p class="text-selected-cards"></p>
+            <div class="cards-footer-btn-container">
+                <div class="btn copy-btn">
+                    <span class="material-symbols-outlined">content_copy</span>
+                </div>
+                <div class="btn cut-btn">
+                    <span class="material-symbols-outlined">cut</span>
+                </div>
+                <div class="btn delete-btn">
+                    <span class="material-symbols-outlined">delete</span>
+                </div>
+            </div>
+        </footer>
     </main>
-    <footer>
+    <footer class="mobile-footer">
         <div class="nav-bottom">
             <div class="add-btn-mobile"><span class="material-symbols-outlined">add</span></div>
             <div class=""><span class="material-symbols-outlined">delete</span></div>

@@ -7,6 +7,10 @@ import DashboardState from "./DashboardState.js";
 import Folder from "./Folder.js";
 import Link from "./Link.js";
 
+export const getCardsContainer = () => {
+    return document.querySelector(".cards-container");
+}
+
 export const isCardSelected = (card) => {
     return card.getAttribute("data-card-selected") !== null;
 }
@@ -44,6 +48,8 @@ export const toggleCardSelection = (card) => {
 export const getAllCards = () => {
     return document.querySelectorAll(".folder-card, .link-card");
 }
+
+export const getSelectedCards = () => [...getAllCards()].filter(isCardSelected);
 
 export const elementIsCard = (element) => {
     const { classList } = element
@@ -279,18 +285,15 @@ const createCard = (itemType, itemInfo) => {
 }
 
 export const addEventListenerToCardContainer = (eventName, fn, options) => {
-    const cardContainer = document.querySelector("main");
-    cardContainer.addEventListener(eventName, fn, options);
+    getCardsContainer().addEventListener(eventName, fn, options);
 }
 
 export const removeEventListenerFromCardContainer = (eventName, fn, options) => {
-    const cardContainer = document.querySelector("main");
-    cardContainer.removeEventListener(eventName, fn, options);
+    getCardsContainer().removeEventListener(eventName, fn, options);
 }
 
 export const dispatchCardEvent = event => {
-    const main = document.querySelector("main");
-    main.dispatchEvent(event);
+    getCardsContainer().dispatchEvent(event);
 }
 
 const openFolder = folder => {
@@ -317,7 +320,6 @@ const doubleClickCardFn = card => {
 }
 
 const addManageableItemToUI = (itemType, newItem) => {
-    const main = document.querySelector("main");
     newItem = newItem ?? createManageableItem(itemType);
 
     if (newItem) {
@@ -331,7 +333,8 @@ const addManageableItemToUI = (itemType, newItem) => {
 
         const card = createCard(itemType, newItem)
 
-        main.appendChild(card);
+        getCardsContainer().appendChild(card);
+
         card.addEventListener("dblclick", ({ target }) => {
             if (target === card) {
                 doubleClickCardFn(card)
