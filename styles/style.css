@@ -57,11 +57,11 @@ span{
     background-color: #90CDF4;
     padding: 15px;
     border-radius: 10px;
+    transition: .2s;
 }
 span:hover{
-    transition: 2s;
+    transition: .2s;
     background-color: #52a2d4;
-    transform: scale(1.2,1.2);
 }
 
 .texto{
