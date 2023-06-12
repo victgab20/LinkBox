@@ -245,14 +245,6 @@ export const createFolderCard = (folder) => createItemCardFactory("folder", fold
 
 export const createLinkCard = (link) => createItemCardFactory("link", link)();
 
-export const changeColor = () =>{
-    const cards = document.getElementsByClassName('link-card')
-    const card = Array.from(cards) 
-    console.log(card)
-    console.log(card[1].style.backgroundColor = 'blue')
-    //card2.links.colorBackground = "green"
-}
-
 const createLink = () => {
     const linkInfo = inputLinkInfo();
     if (!linkInfo) return null;
