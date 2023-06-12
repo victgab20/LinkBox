@@ -7,8 +7,11 @@ class ButtonCut extends Button {
     }
 
     onClick() {
+        const item = this.getAssociatedItem();
         const dashboardState = new DashboardState();
-        dashboardState.setCut([this.getAssociatedItem()]);
+        dashboardState.cancelCopy();
+        dashboardState.cancelCut();
+        dashboardState.setCut([item]);
     }
 }
 

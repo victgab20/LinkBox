@@ -31,14 +31,14 @@ searchBar.addEventListener("input", searchBarInputListenerFn);
   });
 });
 
-const copySelectedCards = () => {
+cardsFooterCopyBtn.addEventListener("click", _ => {
   const dashboardState = new DashboardState();
   const selectedCards = util.getSelectedCards();
   const items = selectedCards.map(card => util.getItemFromCard(card));
+  dashboardState.cancelCopy();
+  dashboardState.cancelCut();
   dashboardState.setCopied(items);
-}
-
-cardsFooterCopyBtn.addEventListener("click", copySelectedCards);
+});
 
 const hideCancelPasteBtn = () => { cancelPasteBtn.classList.add("hidden") };
 
@@ -52,14 +52,22 @@ document.addEventListener("custom:copied", _ => { showCancelPasteBtn(); showPast
 
 document.addEventListener("custom:cut", _ => { showCancelPasteBtn(); showPasteBtn() });
 
-const cutSelectedCards = () => {
+document.addEventListener("custom:cut", event => {
+  const { items } = event.detail;
+  const cards = items.map(util.getCardFromItem);
+  cards.forEach(util.removeCardFromUI);
+});
+
+cardsFooterCutBtn.addEventListener("click", _ => {
   const dashboardState = new DashboardState();
   const selectedCards = util.getSelectedCards();
   const items = selectedCards.map(card => util.getItemFromCard(card));
-  dashboardState.setCut(items);
-}
 
-cardsFooterCutBtn.addEventListener("click", cutSelectedCards);
+  dashboardState.cancelCopy();
+  dashboardState.cancelCut();
+
+  dashboardState.setCut(items);
+});
 
 const removeSelectedCards = () => {
   util.getSelectedCards().forEach(util.removeCardFromUI);
@@ -76,6 +84,12 @@ cancelPasteBtn.addEventListener("click", (e) => {
 document.addEventListener("custom:cancelCopy", _ => { hideCancelPasteBtn(); hidePasteBtn() });
 
 document.addEventListener("custom:cancelCut", _ => { hideCancelPasteBtn(); hidePasteBtn() });
+
+document.addEventListener("custom:cancelCut", event => {
+  const currentFolder = new DashboardState().getCurrentFolder();
+  util.getAllCards().forEach(util.removeCardFromUI);
+  currentFolder.getChildren().forEach(util.addItemToUI);
+});
 
 pasteBtn.addEventListener("click", _ => {
   const dashboardState = new DashboardState();
