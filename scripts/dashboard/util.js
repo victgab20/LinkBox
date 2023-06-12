@@ -1,5 +1,6 @@
 import Button from "./Button.js";
 import ButtonColor from "./Button/ButtonColor.js";
+import ButtonCopy from "./Button/ButtonCopy.js";
 import ButtonDelete from "./Button/ButtonDelete.js";
 import ButtonEdit from "./Button/ButtonEdit.js";
 import ButtonSelect from "./Button/ButtonSelect.js";
@@ -191,6 +192,8 @@ const createBtnsContainer = (parentCardType, buttons) => {
                 return new ButtonSelect().getElement()
             case "palette":
                 return new ButtonColor().getElement()
+            case "content_copy":
+                return new ButtonCopy().getElement()
             case "edit":
                 return new ButtonEdit().getElement()
             case "delete":
