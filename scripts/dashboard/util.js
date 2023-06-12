@@ -298,10 +298,20 @@ const openFolder = folder => {
     dashboardState.setCurrentFolder(folder)
 }
 
+const openLinkInNewTab = ({ url }) => {
+    if (!!url && !/^https?:\/\//i.test(url)) {
+        url = `http://${url}`;
+    }
+
+    window.open(url, "_blank");
+};
+
 const doubleClickCardFn = card => {
     const item = getItemFromCard(card);
 
-    if (item instanceof Folder) {
+    if (item instanceof Link) {
+        openLinkInNewTab(item);
+    } else {
         openFolder(item);
     }
 }
