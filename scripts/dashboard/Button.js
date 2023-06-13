@@ -41,7 +41,7 @@ class Button {
 
     #createElement() {
         let btn = document.createElement("div");
-        btn.className = "btn";
+        btn.classList.add("btn", "card-btn");
 
         const span = document.createElement("span");
         span.className = "material-symbols-outlined";

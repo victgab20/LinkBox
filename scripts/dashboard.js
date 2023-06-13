@@ -213,6 +213,20 @@ document.addEventListener("custom:currentFolderChanged", event => {
   }
 })
 
+window.addEventListener("resize", _ => {
+  util.getAllCards().forEach(card => {
+    const isInSmallScreenWidth = new DashboardState().isInSmallScreenWidth();
+
+    const customEvent = new CustomEvent(
+      isInSmallScreenWidth ?
+      "custom:disableToggleBtnsBasedOnHover" :
+      "custom:enableToggleBtnsBasedOnHover"
+    );
+
+    card.dispatchEvent(customEvent);
+  })
+})
+
 const allCards = util.getAllCards();
 
 if (allCards.length == 0) showEmptyFolderMessage();

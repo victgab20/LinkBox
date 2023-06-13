@@ -22,6 +22,12 @@ class ButtonSelect extends Button {
         }
     }
 
+    getElement() {
+        const element = super.getElement();
+        element.classList.add("select-btn");
+        return element;
+    }
+
     #isSelected() {
         return util.isCardSelected(this.getContainerCard());
     }

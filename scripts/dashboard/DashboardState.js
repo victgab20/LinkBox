@@ -15,6 +15,10 @@ class DashboardState {
     return DashboardState.instance;
   }
 
+  isInSmallScreenWidth() {
+    return window.innerWidth <= 651;
+  }
+
   cancelCopy() {
     const items = this.#copied;
     this.#copied = [];

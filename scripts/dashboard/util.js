@@ -214,7 +214,11 @@ const createBtnsContainer = (parentCardType, buttons) => {
         btnsContainer.appendChild(btn)
     })
 
-    btnsContainer.classList.add("hidden");
+    if (new DashboardState().isInSmallScreenWidth()) {
+        btnsContainer.classList.remove("hidden");
+    } else {
+        btnsContainer.classList.add("hidden");
+    }
 
     return btnsContainer;
 }
@@ -227,8 +231,57 @@ const createDataContainer = (itemType, item) => {
   }
 };
 
+const showCardBtns = card => {
+    card.querySelectorAll(".card-btn").forEach(btn => {
+        btn.classList.remove("hidden")
+    })
+}
+
+const hideCardBtns = card => {
+    card.querySelectorAll(".card-btn").forEach(btn => {
+        if (!btn.classList.contains("select-btn")) {
+            btn.classList.add("hidden")
+        }
+    })
+}
+
+const showBtnsContainer = btnsContainer => btnsContainer.classList.remove("hidden");
+
+const hideBtnsContainer = btnsContainer => btnsContainer.classList.add("hidden");
+
+const addCardEventListeners = card => {
+    const btnsContainer = card.querySelector(".btns-container");
+
+    card.addEventListener("mouseout", () => {
+        if (card.enabledToggleBtnsBasedOnHover) {
+            hideBtnsContainer(btnsContainer);
+            hideCardBtns(card);
+        }
+    });
+
+    card.addEventListener("mouseover", () => {
+        showBtnsContainer(btnsContainer);
+        if (card.enabledToggleBtnsBasedOnHover) showCardBtns(card);
+    });
+
+    card.addEventListener("custom:disableToggleBtnsBasedOnHover", event => {
+        card.enabledToggleBtnsBasedOnHover = false;
+        showBtnsContainer(btnsContainer);
+        hideCardBtns(card);
+    })
+
+    card.addEventListener("custom:enableToggleBtnsBasedOnHover", event => {
+        card.enabledToggleBtnsBasedOnHover = true;
+        hideBtnsContainer(btnsContainer);
+        showCardBtns(card);
+        // showCardBtns(card);
+    })
+}
+
 const createItemCardFactory = (itemType, item) => {
     return () => {
+        const dashboardState = new DashboardState()
+        const isInSmallScreenWidth = dashboardState.isInSmallScreenWidth();
         const card = document.createElement("div");
         card.className = `${itemType}-card`;
         card.style.backgroundColor = item.backgroundColor;
@@ -239,8 +292,10 @@ const createItemCardFactory = (itemType, item) => {
         const btnsContainer = createBtnsContainer(itemType);
         card.appendChild(btnsContainer);
 
-        card.addEventListener("mouseout", () => btnsContainer.classList.add("hidden"));
-        card.addEventListener("mouseover", () => btnsContainer.classList.remove("hidden"));
+        card.enabledToggleBtnsBasedOnHover = !isInSmallScreenWidth;
+
+        if (isInSmallScreenWidth) hideCardBtns(card);
+        addCardEventListeners(card);
         unselectCardWithoutEventDispatch(card);
 
         return card;
