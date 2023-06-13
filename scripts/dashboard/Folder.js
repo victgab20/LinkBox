@@ -32,6 +32,9 @@ class Folder extends ManageableItem {
         return this.#children;
     }
 
+    remove() {
+    }
+
     removeChild(child) {
         this.#setChildren(this.getChildren().filter(v => v !== child))
     }

@@ -13,6 +13,10 @@ class Link extends ManageableItem {
         clonedLink.setParent(this.getParent());
         return clonedLink;
     }
+
+    remove() {
+        this.getParent().removeChild(this);
+    }
 }
 
 export default Link;

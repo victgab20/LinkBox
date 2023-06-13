@@ -48,7 +48,7 @@ export const toggleCardSelection = (card) => {
 }
 
 export const getAllCards = () => {
-    return document.querySelectorAll(".folder-card, .link-card");
+    return getCardsContainer().querySelectorAll(".folder-card, .link-card");
 }
 
 export const getSelectedCards = () => [...getAllCards()].filter(isCardSelected);

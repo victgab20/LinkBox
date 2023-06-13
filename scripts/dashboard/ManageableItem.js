@@ -18,10 +18,6 @@ class ManageableItem {
         return this.#parent;
     }
 
-    remove() {
-        ManageableItem.#items = ManageableItem.#items.filter(item => item !== this);
-    }
-
     getId() {
         return this.#id;
     }
