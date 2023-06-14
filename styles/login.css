@@ -70,6 +70,14 @@ form{
     margin-top: 60px;
 }
 
+.error {
+    color: rgb(227, 65, 65);
+}
+.success {
+    color: aquamarine;
+    display: none;
+}
+
 input{
     height: 50px;
     width: 390px; 
