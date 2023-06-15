@@ -22,6 +22,24 @@ const username = document.querySelector('#input-nome')
 const email = document.querySelector('#input-email')
 const password = document.querySelector('#input-senha')
 const form = document.querySelector('form')
+const checkBox = document.querySelectorAll('#sla')
+const check = document.querySelector('#sla')
+const url = '/login.html'
+let selecionado = 0
+
+
+check.addEventListener("click", (e) =>{
+
+
+    selecionado = 0
+    checkBox.forEach((ele) =>{
+        if(ele.checked){
+            selecionado++
+        }
+    })
+    console.log(selecionado)
+
+})
 
 
 
@@ -40,7 +58,7 @@ function checkInput(){
     if(usernameValue === ""){
         setErrorFor(username, "Nome de usuario é obrigatório");
     } else{
-        setSuccessFor(username);
+        setSuccessForUsername(username);
     }
 
     if(emailValue === ""){
@@ -48,17 +66,16 @@ function checkInput(){
     } else if(!checkEmail(emailValue)){
         setErrorFor(email, "Por favor insira um email válido.");
     } else {
-       setSuccessFor(email)
+       setSuccessForEmail(email)
     }
 
     if(passwordValue === ""){
-        
         setErrorFor(password,"A senha é obrigatória.");
 
     } else if(passwordValue.length < 7){
         setErrorFor(password, "A senha precisa ter mais de 7 caracteries.");
     } else{
-        setSuccessFor(password)
+        setSuccessForPassaword(password)
     }
 
   }
@@ -73,29 +90,70 @@ function checkInput(){
 
 
   
-  function setSuccessFor(input){
-   const formsControl = input.parentElement;
-   
-
+     function setSuccessForPassaword(input){
+        const formsControl = input.parentElement;
+        const small = formsControl.querySelector('small')
+        
+         small.classList.add('success')
+         small.classList.remove('error')
+         teste()
+     
+     }
+     function setSuccessForEmail(input){
+        const formsControl = input.parentElement;
+        console.log(formsControl)
+        const small = formsControl.querySelector('small')
+     
+        
+     
+         // adc sucesso
+         small.classList.add('success')
+         small.classList.remove('error')
+         teste()
+     
+     }
+  function setSuccessForUsername(input){
+    const formsControl = input.parentElement;
+    const small = formsControl.querySelector('small')
     // adc sucesso
-    formsControl.classList.add('success')
-    formsControl.classList.remove('error')
+     small.classList.add('success')
+     small.classList.remove('error')
+     //teste()
 
 }
 
 
 
 
-  function setErrorFor(input, message){
+function setErrorFor(input, message){
     const formsControl = input.parentElement;
-    //const novoInput = formsControl.classList
-    //novoInput.add('error')
     const small = formsControl.querySelector('small')
 
     // msg de erro
     small.innerText = message;
     //adc classe de erro
-   formsControl.classList.add('error')
+   small.classList.add('error')
+
+}
+
+function redirecionar() {
+    // Redireciona o navegador para o URL especificado
+    window.location.href = url;
+  }
+
+
+function teste(){
+
+    const smallEmail = document.querySelector('.smalEmails')
+    const smallPassword = document.querySelector('.smallPasswordd')
+    const smallUsername = document.querySelector('.smallUsernamee')
+
+    if(smallEmail.classList.contains('success') && smallPassword.classList.contains('success') && smallUsername.classList.contains('success') && selecionado === 1){
+        alert('Você foi cadastrado')
+        redirecionar()
+    }else{
+        console.log('rodou')
+    }
 
 }
 

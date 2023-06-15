@@ -125,11 +125,11 @@ form{
     color: #2795DB;
 }
 
-.error small{
+.error {
     color: rgb(227, 65, 65);
 }
-.success small{
-    color: rgb(28, 206, 96);
+.success {
+    color: aquamarine;
     display: none;
 }
 
