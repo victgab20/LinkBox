@@ -24,7 +24,7 @@ const password = document.querySelector('#input-senha')
 const form = document.querySelector('form')
 const checkBox = document.querySelectorAll('#sla')
 const check = document.querySelector('#sla')
-const url = '/login.html'
+const url = 'LinkBox/login.html'
 let selecionado = 0
 
 
