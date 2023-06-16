@@ -18,7 +18,7 @@ visibilidadeSenhaBtn.addEventListener("click", (e) => {
 })
 
 
-const url = 'LinkBox/dashboard.html'
+const url = 'dashboard.html'
 const form = document.querySelector('form')
 
 form.addEventListener("submit", (e) => {

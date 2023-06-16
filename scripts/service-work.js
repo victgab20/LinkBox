@@ -5,7 +5,13 @@ self.addEventListener('install', (event) => {
         return cache.addAll([
           '/',
           '/index.html',
+          '/dashboard.html',
+          '/login.html',
+          '/cadastro.html',
           '/styles.css',
+          '/dashboard.css',
+          '/cadastro.css',
+          '/login.css',
           '/script.js'
         ]);
       })
