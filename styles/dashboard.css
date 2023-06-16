@@ -193,6 +193,76 @@ main > header,
     display: none;
 }
 
+.side{
+    height: 40px;
+}
+
+.side-menu{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 240px;
+    height: 100%;
+    background-color: #2795DB;
+    border: solid rgb(11, 103, 178);
+    padding: 40px 10px 30px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.exit{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.exit-btn{
+    padding: 10px;
+    border: solid skyblue;
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+.exit-btn:hover{
+    transform: scale(1.2, 1.2);
+    transition: 0.5s;
+}
+
+
+.side-options{
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: start;
+}
+.side-content{
+
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
+
+}
+
+.hide{
+    display: none;
+}
+
+.side-btn{
+
+    border: solid rgb(26, 33, 34);
+    border-radius: 10px;
+    padding: 4px;
+
+}
+.side-text{
+    color: aliceblue;
+    font-weight: 500;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 @media(max-width: 651px){
     .brand{
         display: none;

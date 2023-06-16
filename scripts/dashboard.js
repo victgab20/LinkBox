@@ -14,6 +14,26 @@ const cardsFooterCopyBtn = cardsFooter.querySelector(".copy-btn");
 const cardsFooterCutBtn = cardsFooter.querySelector(".cut-btn");
 const cardsFooterDeleteBtn = cardsFooter.querySelector(".delete-btn");
 
+
+
+const openMenu = document.querySelector(".menu-side")
+const exitMenu = document.querySelector(".exit-btn")
+const menu = document.querySelector(".side-menu")
+
+
+openMenu.addEventListener("click", (e) =>{
+  
+  menu.classList.remove("hide")
+
+})
+
+exitMenu.addEventListener("click", (e) =>{
+  menu.classList.add("hide")
+})
+
+
+
+
 searchBar.addEventListener("input", searchBarInputListenerFn);
 
 [addBtn, addBtnMobile].forEach((btn) => {
