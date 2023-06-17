@@ -1,5 +1,5 @@
 {
-    "name": "Gerenciador de links LinkBox",
+    "name": "LinkBox",
     "short_name": "LinkBox",
     "start_url": "index.html",
     "display": "standalone",

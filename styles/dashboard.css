@@ -27,15 +27,14 @@ nav, .brand {
     gap: 20px;
 }
 
+
 nav {
+    display: flex;
     justify-content: space-between;
     padding: 24px;
     background-color: var(--accent-color);
 }
 
-nav > * {
-    flex: 1;
-}
 
 .nav-btns-container {
     display: flex;
@@ -200,7 +199,7 @@ main > header,
 .side-menu{
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     width: 240px;
     height: 100%;
     background-color: #2795DB;
