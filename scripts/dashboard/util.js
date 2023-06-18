@@ -132,7 +132,7 @@ export const updateCard = card => {
 }
 
 export const inputFolderInfo = () => {
-    const name = prompt("Name: ");
+    const name = prompt("Nome: ");
     if (!name.trim()) return null;
 
     return { name }
@@ -141,7 +141,7 @@ export const inputFolderInfo = () => {
 export const inputLinkInfo = () => {
     const url = prompt("Url: ");
     if (!url.trim()) return null;
-    const name = prompt("Name: ");
+    const name = prompt("Nome: ");
     if (!name.trim()) return null;
 
     return { name, url }
