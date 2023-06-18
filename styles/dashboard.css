@@ -75,6 +75,7 @@ main > header,
 
 .cards-footer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: end;
     align-items: center;
     margin-top: auto;
