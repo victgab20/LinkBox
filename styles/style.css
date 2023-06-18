@@ -53,6 +53,16 @@ p{
     font-size: 30px;
 }
 
+.login-text {
+    border-bottom: 2px solid #00000000;
+    transition: .2s;
+}
+
+.login-text:hover {
+    border-bottom: 2px solid black;
+    transition: .2s;
+}
+
 span{
     background-color: #90CDF4;
     padding: 15px;
