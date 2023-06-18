@@ -9,6 +9,7 @@
     --light-bg-active-nav-link: #1a75ae;
     --btn-transition-in: 0.2s;
     --btn-transition-out: 0.2s;
+    --highlight: #efeded;
 }
 
 body {
@@ -74,13 +75,18 @@ main > header,
 }
 
 .cards-footer {
+    background-color: var(--highlight);
     display: flex;
     flex-wrap: wrap;
     justify-content: end;
     align-items: center;
     margin-top: auto;
-    gap: 20px;
-    padding: 8px 20px;
+    gap: 0 20px;
+    padding: 8px 0;
+}
+
+.text-selected-cards {
+    padding: 20px;
 }
 
 .cards-footer-btn-container {
@@ -268,7 +274,7 @@ main > header,
     nav {
         justify-content: space-around;
         padding: 24px;
-        background-color: rgb(239, 237, 237);
+        background-color: var(--highlight);
     }
 
     nav div:nth-child(3) {
