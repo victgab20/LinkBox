@@ -161,11 +161,15 @@ const createFolderDataContainer = (folder) => {
     span.className = "material-symbols-outlined";
     span.textContent = "folder";
 
+    const iconContainer = document.createElement("div");
+    iconContainer.className = "card-icon-container"
+    iconContainer.appendChild(span);
+
     const p = document.createElement("p");
     p.className = "folder-name";
     p.textContent = folder.name;
 
-    dataContainer.appendChild(span);
+    dataContainer.appendChild(iconContainer);
     dataContainer.appendChild(p);
 
     return dataContainer;
@@ -178,7 +182,11 @@ export const createLinkDataContainer = (link) => {
     const linkImg = getLinkImg(link);
     const infoContainer = createLinkInfoContainer(link);
 
-    dataContainer.appendChild(linkImg);
+    const iconContainer = document.createElement("div");
+    iconContainer.className = "card-icon-container"
+    iconContainer.appendChild(linkImg);
+
+    dataContainer.appendChild(iconContainer);
     dataContainer.appendChild(infoContainer);
 
     return dataContainer;
