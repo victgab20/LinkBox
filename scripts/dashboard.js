@@ -67,7 +67,11 @@ cardsFooterCutBtn.addEventListener("click", _ => {
 });
 
 const removeSelectedCards = () => {
-  util.getSelectedCards().forEach(util.removeCardFromUI);
+  util.getSelectedCards().forEach(card => {
+    const item = util.getItemFromCard(card);
+    util.removeCardFromUI(card);
+    item.remove();
+  });
 }
 
 cardsFooterDeleteBtn.addEventListener("click", removeSelectedCards);
