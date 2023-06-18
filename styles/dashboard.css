@@ -36,6 +36,14 @@ nav {
     background-color: var(--accent-color);
 }
 
+nav > * {
+    flex: 1;
+}
+
+.brand-box {
+    display: flex;
+    justify-content: start;
+}
 
 .nav-btns-container {
     display: flex;
