@@ -20,27 +20,30 @@ class ButtonColor extends Button {
     }
 
     #colorInputChangeColor(event) {
-        const card = this.getContainerCard();
+        const card = this.getCardFromCardsList();
         const item = util.getItemFromCard(card);
         const color = event.target.value;
         item.backgroundColor = color;
 
         if (!this.#changingColor) {
-            const cardSelected = util.isCardSelected(card)
+            const cardSelected = card.classList.contains("card-selected");
             this.#shouldSelectCardAfterColorChange = cardSelected;
             if (cardSelected) {
-                util.unselectCard(card);
+                card.classList.remove("card-selected");
             }
         }
 
         this.#changingColor = true;
 
-        util.updateCard(card);
+        card.style.backgroundColor = color;
     }
 
     #colorInputAfterChangeColor(_) {
-        const card = this.getContainerCard();
-        if (this.#shouldSelectCardAfterColorChange) util.selectCard(card);
+        const card = this.getCardFromCardsList();
+        if (this.#shouldSelectCardAfterColorChange) {
+            card.classList.add("card-selected")
+            card.style.backgroundColor = null;
+        }
         this.#changingColor = false;
     }
 
@@ -55,8 +58,8 @@ class ButtonColor extends Button {
 
         const eventListeners = [
             // NOTE: arrow function is needed because of `this` context
-            { type: "input", listener: target => this.#colorInputChangeColor(target) },
-            { type: "change", listener: target => this.#colorInputAfterChangeColor(target) }
+            { type: "input", listener: event => this.#colorInputChangeColor(event) },
+            { type: "change", listener: event => this.#colorInputAfterChangeColor(event) }
         ]
 
         eventListeners.forEach((eventListener) => {

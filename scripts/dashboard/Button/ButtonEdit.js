@@ -1,6 +1,5 @@
 import Button from "../Button.js";
-import Link from "../Link.js";
-import { updateCard } from "../util.js";
+import { getItemType, updateCard } from "../util.js";
 
 class ButtonEdit extends Button {
     constructor() {
@@ -14,7 +13,7 @@ class ButtonEdit extends Button {
 
         if (name === null) return;
 
-        if (item instanceof Link) {
+        if (getItemType(item) === "link") {
             url = prompt("URL:", item.url);
 
             if (!url) return;
@@ -32,7 +31,7 @@ class ButtonEdit extends Button {
             shouldUpdateCard = true;
         }
 
-        if (shouldUpdateCard) updateCard(this.getContainerCard());
+        if (shouldUpdateCard) updateCard(this.getCardFromCardsList());
     }
 }
 

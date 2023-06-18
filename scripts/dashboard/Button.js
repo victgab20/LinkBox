@@ -1,5 +1,4 @@
-import { querySelectorUpwards } from "../Util/querySelectorUpwards.js";
-import { addEventListenerToCardContainer, getItemFromCard } from "./util.js";
+import * as util from "./util.js";
 
 class Button {
     #icon;
@@ -9,8 +8,8 @@ class Button {
         this.#element = this.#createElement();
         this.setIcon(icon);
 
-        addEventListenerToCardContainer("custom:cardRemoved", _ => {
-            if (!this.getContainerCard()) {
+        util.addEventListenerToCardContainer("custom:cardRemoved", _ => {
+            if (!this.getCardFromCardsList()) {
                 if (this.onRemove) this.onRemove();
                 delete this;
             }
@@ -32,11 +31,30 @@ class Button {
     }
 
     getAssociatedItem() {
-        return getItemFromCard(this.getContainerCard());
+        const card = this.getContainerCard()
+        return util.getItemFromCard(card);;
+    }
+
+    getCardFromCardsList() {
+        const item = this.getAssociatedItem();
+        const allCards = util.getAllCards();
+        const card = [...allCards].filter(card => item === util.getItemFromCard(card))[0];
+        return card;
+    }
+
+    #findAncestor = (element, predicate) => {
+        let ancestor = element.parentElement;
+
+        while (ancestor) {
+            if (predicate(ancestor)) return ancestor;
+            ancestor = ancestor.parentElement;
+        }
+
+        return null;
     }
 
     getContainerCard() {
-        return querySelectorUpwards(this.getElement(), ".folder-card, .link-card");
+        return this.#findAncestor(this.getElement(), ancestor => util.elementIsCard(ancestor));
     }
 
     #createElement() {

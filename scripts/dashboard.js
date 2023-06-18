@@ -37,13 +37,13 @@ cardsFooterCopyBtn.addEventListener("click", _ => {
   dashboardState.setCopied(items);
 });
 
-const hideCancelPasteBtn = () => { cancelPasteBtn.classList.add("hidden") };
+const hideCancelPasteBtn = () => { util.hideElement(cancelPasteBtn) };
 
-const hidePasteBtn = () => { pasteBtn.classList.add("hidden") };
+const hidePasteBtn = () => { util.hideElement(pasteBtn) };
 
-const showCancelPasteBtn = () => { cancelPasteBtn.classList.remove("hidden") };
+const showCancelPasteBtn = () => { util.showElement(cancelPasteBtn) };
 
-const showPasteBtn = () => {  pasteBtn.classList.remove("hidden") };
+const showPasteBtn = () => { util.showElement(pasteBtn) };
 
 document.addEventListener("custom:copied", _ => { showCancelPasteBtn(); showPasteBtn() });
 
@@ -117,10 +117,10 @@ goBackBtn.addEventListener("click", (e) => {
 })
 
 const emptyFolderMessage = document.querySelector(".empty-folder-message");
-const showEmptyFolderMessage = () => emptyFolderMessage.classList.remove("hidden");
-const hideEmptyFolderMessage = () => emptyFolderMessage.classList.add("hidden");
-const showCardsContainer = () => getCardsContainer().classList.remove("hidden");
-const hideCardsContainer = () => getCardsContainer().classList.add("hidden");
+const showEmptyFolderMessage = () => util.showElement(emptyFolderMessage);
+const hideEmptyFolderMessage = () => util.hideElement(emptyFolderMessage);
+const showCardsContainer = () => util.showElement(getCardsContainer());
+const hideCardsContainer = () => util.hideElement(getCardsContainer());
 
 util.addEventListenerToCardContainer("custom:cardAdded", () => {
   hideEmptyFolderMessage();
@@ -152,16 +152,50 @@ const createMessageForCardsFooter = selectedCardsAmount => {
   return message;
 }
 
+const originalCardsFooterBtnContainer = document.querySelector(".cards-footer-btn-container");
+
+const replaceCardsFooterBtnContainer = (cardsFooter, newBtnsContainer) => {
+  newBtnsContainer.classList.add("cards-footer-btn-container");
+  const cardsFooterBtnContainer = cardsFooter.querySelector(".cards-footer-btn-container");
+
+  if (cardsFooterBtnContainer === newBtnsContainer) {
+    return;
+  }
+
+  cardsFooter.appendChild(newBtnsContainer);
+  if (cardsFooterBtnContainer) cardsFooterBtnContainer.remove();
+}
+
+const restoreOriginalCardsFooterBtnContainer = cardsFooter => {
+  replaceCardsFooterBtnContainer(cardsFooter, originalCardsFooterBtnContainer);
+}
+
 const updateCardsFooter = () => {
+  const isInSmallScreenWidth = new DashboardState().isInSmallScreenWidth();
   const selectedCards = util.getSelectedCards();
   const textSelectedCards = cardsFooter.querySelector(".text-selected-cards")
   textSelectedCards.textContent = createMessageForCardsFooter(selectedCards.length);
 
-  if (selectedCards.length === 0) {
-    cardsFooter.classList.add("hidden");
-  } else {
-    cardsFooter.classList.remove("hidden");
+  if (selectedCards.length > 1) {
+    const cardsFooterBtnContainer = cardsFooter.querySelector(".cards-footer-btn-container");
+    restoreOriginalCardsFooterBtnContainer(cardsFooter);
+    util.showElement(cardsFooter);
+    return;
+  } else if (selectedCards.length === 0 || !isInSmallScreenWidth) {
+    restoreOriginalCardsFooterBtnContainer(cardsFooter);
+    util.hideElement(cardsFooter);
+    return;
   }
+
+  const firstSelectedCard = util.cloneCard(selectedCards[0]);
+  firstSelectedCard.style.backgroundColor = "#00000000";
+  const dataContainer = firstSelectedCard.querySelector(".link-data-container, .folder-data-container");
+  util.hideElement(dataContainer);
+  const cardBtnsContainers = firstSelectedCard.querySelector(".btns-container");
+  util.showCardBtns(cardBtnsContainers);
+  util.hideCardBtns(cardBtnsContainers, btn => btn.classList.contains("select-btn"));
+  replaceCardsFooterBtnContainer(cardsFooter, firstSelectedCard);
+  util.showElement(cardsFooter);
 }
 
 util.addEventListenerToCardContainer("custom:cardSelected", updateCardsFooter)
@@ -193,9 +227,9 @@ document.addEventListener("custom:currentFolderChanged", event => {
   childItems.forEach(util.addItemToUI);
 
   if (currentFolder.isRoot()) {
-    goBackBtn.classList.add("hidden");
+    util.hideElement(goBackBtn)
   } else {
-    goBackBtn.classList.remove("hidden");
+    util.showElement(goBackBtn)
   }
 
   const folderName = currentFolder.name;
@@ -203,10 +237,10 @@ document.addEventListener("custom:currentFolderChanged", event => {
 
   if (folderName) {
     folderNameElement.textContent = currentFolder.name;
-    folderNameElement.classList.remove("hidden");
+    util.showElement(folderNameElement)
   } else {
     folderNameElement.textContent = "";
-    folderNameElement.classList.add("hidden");
+    util.hideElement(folderNameElement)
   }
 })
 
@@ -221,6 +255,7 @@ window.addEventListener("resize", _ => {
     );
 
     card.dispatchEvent(customEvent);
+    updateCardsFooter();
   })
 })
 

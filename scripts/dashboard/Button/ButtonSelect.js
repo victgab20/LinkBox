@@ -29,7 +29,7 @@ class ButtonSelect extends Button {
     }
 
     #isSelected() {
-        return util.isCardSelected(this.getContainerCard());
+        return util.isCardSelected(this.getCardFromCardsList());
     }
 
     #updateIcon() {
@@ -37,12 +37,12 @@ class ButtonSelect extends Button {
     }
 
     #select() {
-        util.selectCard(this.getContainerCard());
+        util.selectCard(this.getCardFromCardsList());
         this.#updateIcon();
     }
 
     #unselect() {
-        util.unselectCard(this.getContainerCard());
+        util.unselectCard(this.getCardFromCardsList());
         this.#updateIcon();
     }
 

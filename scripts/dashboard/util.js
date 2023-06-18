@@ -9,6 +9,26 @@ import DashboardState from "./DashboardState.js";
 import Folder from "./Folder.js";
 import Link from "./Link.js";
 
+export const cloneCard = card => {
+    card = card.cloneNode(true);
+    const btnsContainer = card.querySelector(".btns-container");
+    // Recreating btnsContainer is needed because just using element.cloneNode(true) doesn't clone the event listeners
+    const newBtnsContainer = createBtnsContainer(getCardType(card));
+    btnsContainer.insertAdjacentElement("afterend", newBtnsContainer);
+    btnsContainer.remove();
+    return card;
+}
+
+export const showElement = (element) => {
+    element.classList.remove("hidden");
+}
+
+export const hideElement = (element) => {
+    element.classList.add("hidden");
+}
+
+export const getItemType = item => item instanceof Link ? "link" : "folder";
+
 export const getCardsContainer = () => {
     return document.querySelector(".cards-container");
 }
@@ -68,7 +88,7 @@ export const getItemFromCard = card => {
 }
 
 export const getCardFromItem = item => {
-    const itemType = item instanceof Link ? "link" : "folder";
+    const itemType = getItemType(item);
     const itemId = item.getId();
 
     for (const card of getAllCards()) {
@@ -215,9 +235,9 @@ const createBtnsContainer = (parentCardType, buttons) => {
     })
 
     if (new DashboardState().isInSmallScreenWidth()) {
-        btnsContainer.classList.remove("hidden");
+        showElement(btnsContainer);
     } else {
-        btnsContainer.classList.add("hidden");
+        hideElement(btnsContainer);
     }
 
     return btnsContainer;
@@ -231,31 +251,30 @@ const createDataContainer = (itemType, item) => {
   }
 };
 
-const showCardBtns = card => {
+export const showCardBtns = (card, predicate) => {
     card.querySelectorAll(".card-btn").forEach(btn => {
-        btn.classList.remove("hidden")
+        if (!predicate || predicate(btn)) showElement(btn);
     })
 }
 
-const hideCardBtns = card => {
+export const hideCardBtns = (card, predicate) => {
     card.querySelectorAll(".card-btn").forEach(btn => {
-        if (!btn.classList.contains("select-btn")) {
-            btn.classList.add("hidden")
-        }
+        if (!predicate || predicate(btn)) hideElement(btn);
     })
 }
 
-const showBtnsContainer = btnsContainer => btnsContainer.classList.remove("hidden");
+const showBtnsContainer = btnsContainer => { showElement(btnsContainer) };
 
-const hideBtnsContainer = btnsContainer => btnsContainer.classList.add("hidden");
+const hideBtnsContainer = btnsContainer => { hideElement(btnsContainer) };
 
 const addCardEventListeners = card => {
     const btnsContainer = card.querySelector(".btns-container");
+    const predicate = btn => !btn.classList.contains("select-btn")
 
     card.addEventListener("mouseout", () => {
         if (card.enabledToggleBtnsBasedOnHover) {
             hideBtnsContainer(btnsContainer);
-            hideCardBtns(card);
+            hideCardBtns(card, predicate);
         }
     });
 
@@ -267,14 +286,13 @@ const addCardEventListeners = card => {
     card.addEventListener("custom:disableToggleBtnsBasedOnHover", event => {
         card.enabledToggleBtnsBasedOnHover = false;
         showBtnsContainer(btnsContainer);
-        hideCardBtns(card);
+        hideCardBtns(card, predicate);
     })
 
     card.addEventListener("custom:enableToggleBtnsBasedOnHover", event => {
         card.enabledToggleBtnsBasedOnHover = true;
         hideBtnsContainer(btnsContainer);
         showCardBtns(card);
-        // showCardBtns(card);
     })
 }
 
@@ -294,7 +312,7 @@ const createItemCardFactory = (itemType, item) => {
 
         card.enabledToggleBtnsBasedOnHover = !isInSmallScreenWidth;
 
-        if (isInSmallScreenWidth) hideCardBtns(card);
+        if (isInSmallScreenWidth) hideCardBtns(card, btn => !btn.classList.contains("select-btn"));
         addCardEventListeners(card);
         unselectCardWithoutEventDispatch(card);
 
@@ -365,7 +383,7 @@ const openLinkInNewTab = ({ url }) => {
 const doubleClickCardFn = card => {
     const item = getItemFromCard(card);
 
-    if (item instanceof Link) {
+    if (getItemType(item) === "link") {
         openLinkInNewTab(item);
     } else {
         openFolder(item);
@@ -426,7 +444,7 @@ export const addLinkToUI = (link) => addManageableItemToUI("link", link);
 export const addFolderToUI = (folder) => addManageableItemToUI("folder", folder);
 
 export const addItemToUI = (item) => {
-    if (item instanceof Link) {
+    if (getItemType(item) === "link") {
         addLinkToUI(item);
     } else {
         addFolderToUI(item);
