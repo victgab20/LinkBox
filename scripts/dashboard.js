@@ -6,7 +6,6 @@ import { getCardsContainer } from "./dashboard/util.js";
 const searchBar = document.querySelector("#inputPesquisa");
 const goBackBtn = document.querySelector(".go-back-btn");
 const addBtn = document.querySelector(".add-btn");
-const addBtnMobile = document.querySelector(".add-btn-mobile");
 const cancelPasteBtn = document.querySelector(".cancel-paste-btn");
 const pasteBtn = document.querySelector(".paste-btn");
 const cardsFooter = document.querySelector(".cards-footer");
@@ -36,19 +35,17 @@ exitMenu.addEventListener("click", (e) =>{
 
 searchBar.addEventListener("input", searchBarInputListenerFn);
 
-[addBtn, addBtnMobile].forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
+addBtn.addEventListener("click", (e) => {
+  e.preventDefault();
 
-    const answer = prompt("O que você quer adicionar?\n1 - Pasta\n2 - Link")
-    const itemType = ["folder", "link"][answer - 1]
+  const answer = prompt("O que você quer adicionar?\n1 - Pasta\n2 - Link")
+  const itemType = ["folder", "link"][answer - 1]
 
-    if (itemType === "folder") {
-      util.addFolderToUI();
-    } else if (itemType === "link") {
-      util.addLinkToUI();
-    }
-  });
+  if (itemType === "folder") {
+    util.addFolderToUI();
+  } else if (itemType === "link") {
+    util.addLinkToUI();
+  }
 });
 
 cardsFooterCopyBtn.addEventListener("click", _ => {
