@@ -181,13 +181,6 @@ main > header,
     background-color: var(--light-bg-active-nav-link);
 }
 
-.menu-icon{
-    display: none;
-}
-.menu-hamburguer{
-    display: none;
-}
-
 .side{
     height: 40px;
 }
@@ -259,19 +252,18 @@ main > header,
 }
 
 @media(max-width: 651px){
-    .brand{
+    .brand h1 {
         display: none;
     }
-    .menu-icon{
-        display: block;
-    }
-    .menu-hamburguer{
-        display: block;
-    }
+
     nav {
         justify-content: space-around;
         padding: 24px;
         background-color: rgb(239, 237, 237);
+    }
+
+    nav div:nth-child(3) {
+        display: none;
     }
 }
 
