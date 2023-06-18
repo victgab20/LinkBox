@@ -9,7 +9,7 @@
     --light-bg-active-nav-link: #1a75ae;
     --btn-transition-in: 0.2s;
     --btn-transition-out: 0.2s;
-    --highlight: #efeded;
+    --footer-bg: #efeded;
 }
 
 body {
@@ -83,7 +83,7 @@ main > header,
 }
 
 .cards-footer {
-    background-color: var(--highlight);
+    background-color: var(--footer-bg);
     display: flex;
     flex-wrap: wrap;
     justify-content: end;
@@ -282,7 +282,6 @@ main > header,
     nav {
         justify-content: space-around;
         padding: 24px;
-        background-color: var(--highlight);
     }
 
     nav div:nth-child(3) {
