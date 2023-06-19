@@ -114,7 +114,7 @@ const createLinkImgSrc = (link) => {
 const updateLinkCard = (card) => {
     const link = getItemFromCard(card);
     card.querySelector("img").src = createLinkImgSrc(link);
-    card.querySelector(".link-name").textContent = link.name;
+    card.querySelector(".link-title").textContent = link.title;
     card.querySelector(".link-url").textContent = link.url;
     if (!isCardSelected(card)) {
         card.style.backgroundColor = link.backgroundColor;
@@ -131,20 +131,20 @@ export const updateCard = card => {
     }
 }
 
-export const inputFolderInfo = () => {
-    const name = prompt("Nome: ");
+export const inputFolderInfo = (defaultName) => {
+    const name = prompt("Nome: ", defaultName);
     if (!name.trim()) return null;
 
     return { name }
 }
 
-export const inputLinkInfo = () => {
-    const url = prompt("Url: ");
+export const inputLinkInfo = (defaultUrl, defaultTitle) => {
+    const url = prompt("Url: ", defaultUrl);
     if (!url.trim()) return null;
-    const name = prompt("Nome: ");
-    if (!name.trim()) return null;
+    const title = prompt("Título: ", defaultTitle);
+    if (!title.trim()) return null;
 
-    return { name, url }
+    return { title, url }
 }
 
 export const getLinkImg = (link) => {
@@ -194,16 +194,16 @@ export const createLinkDataContainer = (link) => {
 
 export const createLinkInfoContainer = (link) => {
     const linkInfoContainer = document.createElement("div");
-    const linkName = document.createElement("p");
+    const linkTitle = document.createElement("p");
     const linkUrl = document.createElement("p");
 
-    linkName.textContent = link.name;
-    linkName.className = "link-name";
+    linkTitle.textContent = link.title;
+    linkTitle.className = "link-title";
 
     linkUrl.textContent = link.url;
     linkUrl.className = "link-url";
 
-    linkInfoContainer.appendChild(linkName);
+    linkInfoContainer.appendChild(linkTitle);
     linkInfoContainer.appendChild(linkUrl);
     linkInfoContainer.className = "info-container";
 
@@ -336,7 +336,7 @@ const createLink = () => {
     const linkInfo = inputLinkInfo();
     if (!linkInfo) return null;
 
-    return new Link(linkInfo.name, linkInfo.url);
+    return new Link(linkInfo.title, linkInfo.url);
 }
 
 const createFolder = () => {

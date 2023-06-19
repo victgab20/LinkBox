@@ -6,10 +6,10 @@ const getFolderInfoByCard = (card) => {
 };
 
 const getLinkInfoByCard = card => {
-    const nameTag = card.querySelector(".link-name")
+    const titleTag = card.querySelector(".link-title")
     const urlTag = card.querySelector(".link-url")
 
-    return { name: nameTag.textContent, url: urlTag.textContent }
+    return { title: titleTag.textContent, url: urlTag.textContent }
 }
 
 const includesQuery = (query, ...fields) => {
@@ -39,8 +39,8 @@ export const searchBarInputListenerFn = event => {
     const cards = getAllCards();
 
     [...cards].forEach(card => {
-        const { name, url } = getInfoByCard(card);
-        const hidden = query !== "" && !includesQuery(query, ...filterOutUndefined([name, url]));
+        const { name, title, url } = getInfoByCard(card);
+        const hidden = query !== "" && !includesQuery(query, ...filterOutUndefined([name, title, url]));
 
         if (hidden) {
           card.classList.add("hidden");

@@ -1,5 +1,5 @@
 import Button from "../Button.js";
-import { getItemType, updateCard } from "../util.js";
+import * as util from "../util.js";
 
 class ButtonEdit extends Button {
     constructor() {
@@ -8,30 +8,21 @@ class ButtonEdit extends Button {
 
     onClick() {
         const item = this.getAssociatedItem();
-        let name = prompt("Nome:", item.name);
-        let url
+        const itemType = util.getItemType(item);
+        let shouldUpdateCard;
 
-        if (name === null) return;
-
-        if (getItemType(item) === "link") {
-            url = prompt("URL:", item.url);
-
-            if (!url) return;
+        if (itemType === "link") {
+            const { url, title } = util.inputLinkInfo(item.url, item.title);
+            if (url) item.url = url;
+            if (title) item.title = title;
+            shouldUpdateCard = !!url || !!title;
+        } else {
+            const { name } = util.inputFolderInfo(item.name);
+            if (name) item.name = name;
+            shouldUpdateCard = !!name;
         }
 
-        let shouldUpdateCard = false;
-
-        if (name !== item.name) {
-            item.name = name;
-            shouldUpdateCard = true;
-        }
-
-        if (url !== item.url) {
-            item.url = url;
-            shouldUpdateCard = true;
-        }
-
-        if (shouldUpdateCard) updateCard(this.getCardFromCardsList());
+        if (shouldUpdateCard) util.updateCard(this.getCardFromCardsList());
     }
 }
 
