@@ -6,9 +6,12 @@
     --light-bg-hover: #DDE3EC;
     --light-bg-hover-darker: #c2c8d1;
     --light-bg-hover-nav-link: #147cbd;
+    --light-bg-active: #BBC8DC;
     --light-bg-active-nav-link: #1a75ae;
     --btn-transition-in: 0.2s;
     --btn-transition-out: 0.2s;
+    --card-sep-border: 1px solid #BBC8DC;
+    --card-sep-border-on-drag-over: 1px solid var(--accent-color);
     --footer-bg: #efeded;
 }
 
@@ -119,10 +122,29 @@ main h2 {
     text-align: center;
 }
 
-main > header,
-.folder-card:not(:last-child),
-.link-card:not(:last-child) {
-    border-bottom: 1px solid #BBC8DC;
+.cards-container .folder-card:first-child,
+.cards-container .link-card:first-child {
+    border-top: var(--card-sep-border);
+}
+
+.cards-container .folder-card,
+.cards-container .link-card {
+    border-bottom: var(--card-sep-border);
+}
+
+.cards-container .folder-card.card-drag-over-below,
+.cards-container .link-card.card-drag-over-below {
+    border-bottom: var(--card-sep-border-on-drag-over);
+}
+
+.cards-container .folder-card.card-drag-over-center,
+.cards-container .link-card.card-drag-over-center {
+    background-color: var(--light-bg-hover);
+}
+
+.cards-container .folder-card.card-drag-over-above,
+.cards-container .link-card.card-drag-over-above {
+    border-top: var(--card-sep-border-on-drag-over);
 }
 
 .cards-header-left,
@@ -287,6 +309,22 @@ main > header,
     nav div:nth-child(3) {
         display: none;
     }
+}
+
+.dragged-number-indicator-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    background-color: var(--light-bg-active);
+    padding: 20px;
+}
+
+.drag-image .link-card,
+.drag-image .folder-card {
+    gap: 20px;
 }
 
 .hidden {

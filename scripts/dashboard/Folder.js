@@ -39,8 +39,35 @@ class Folder extends ManageableItem {
         this.#setChildren(this.getChildren().filter(v => v !== child))
     }
 
+    moveChildToAnotherFolder(child, folder) {
+        if (!this.contains(child)) return;
+
+        folder.addChild(child);
+        this.removeChild(child);
+    }
+
     addChild(child) {
         this.getChildren().push(child);
+    }
+
+    getChildIndex(child) {
+        const targetChild = child;
+        return this.#children.findIndex(child => child === targetChild);
+    }
+
+    moveChild(child, index) {
+        let children = this.getChildren();
+        const childIndex = this.getChildIndex(child);
+        if (childIndex === index) return;
+        children[childIndex] = null;
+
+        let leftChildren = children.slice(0, index);
+        let rightChildren = children.slice(index);
+
+        children = [...leftChildren, child, ...rightChildren];
+        children = children.filter(child => child !== null);
+
+        this.#setChildren(children);
     }
 
     contains(item) {
