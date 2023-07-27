@@ -31,7 +31,7 @@ class Button {
     }
 
     getAssociatedItem() {
-        const card = this.getContainerCard()
+        const card = util.getCardFromElement(this.getElement())
         return util.getItemFromCard(card);;
     }
 
@@ -40,21 +40,6 @@ class Button {
         const allCards = util.getAllCards();
         const card = [...allCards].filter(card => item === util.getItemFromCard(card))[0];
         return card;
-    }
-
-    #findAncestor = (element, predicate) => {
-        let ancestor = element.parentElement;
-
-        while (ancestor) {
-            if (predicate(ancestor)) return ancestor;
-            ancestor = ancestor.parentElement;
-        }
-
-        return null;
-    }
-
-    getContainerCard() {
-        return this.#findAncestor(this.getElement(), ancestor => util.elementIsCard(ancestor));
     }
 
     #createElement() {

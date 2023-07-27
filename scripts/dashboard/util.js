@@ -8,6 +8,7 @@ import ButtonSelect from "./Button/ButtonSelect.js";
 import DashboardState from "./DashboardState.js";
 import Folder from "./Folder.js";
 import Link from "./Link.js";
+import { addDragAndDropListenersToCard } from "./Util/cardDragAndDrop.js";
 
 export const cloneCard = card => {
     card = card.cloneNode(true);
@@ -19,15 +20,30 @@ export const cloneCard = card => {
     return card;
 }
 
-export const showElement = (element) => {
-    element.classList.remove("hidden");
-}
+export const addClass = (element, className) => { element.classList.add(className) };
 
-export const hideElement = (element) => {
-    element.classList.add("hidden");
-}
+export const removeClass = (element, className) => { element.classList.remove(className) };
+
+export const showElement = (element) => { removeClass(element, "hidden") };
+
+export const hideElement = (element) => { addClass(element, "hidden") };
 
 export const getItemType = item => item instanceof Link ? "link" : "folder";
+
+const traverseAncestors = (element, predicate) => {
+    let ancestor = element;
+
+    while (ancestor) {
+        if (predicate(ancestor)) return ancestor;
+        ancestor = ancestor.parentElement;
+    }
+
+    return null;
+}
+
+export const getCardFromElement = element => {
+    return traverseAncestors(element, ancestor => elementIsCard(ancestor));
+}
 
 export const getCardsContainer = () => {
     return document.querySelector(".cards-container");
@@ -85,6 +101,14 @@ export const getItemFromCard = card => {
     const id = parseInt(card.getAttribute(`data-${type}-id`));
     const item = type === "folder" ? Folder.getById(id) : Link.getById(id);
     return item;
+}
+
+export const getItemFromId = (itemType, id) => {
+    if (itemType === "folder") {
+        return Folder.getById(id);
+    } else {
+        return Link.getById(id);
+    }
 }
 
 export const getCardFromItem = item => {
@@ -302,6 +326,8 @@ const addCardEventListeners = card => {
         hideBtnsContainer(btnsContainer);
         showCardBtns(card);
     })
+
+    addDragAndDropListenersToCard(card);
 }
 
 const createItemCardFactory = (itemType, item) => {
@@ -312,6 +338,7 @@ const createItemCardFactory = (itemType, item) => {
         card.className = `${itemType}-card`;
         card.style.backgroundColor = item.backgroundColor;
         card.setAttribute(`data-${itemType}-id`, item.getId());
+        card.setAttribute("draggable", "true");
 
         card.appendChild(createDataContainer(itemType, item));
 
