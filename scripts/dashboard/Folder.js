@@ -1,6 +1,6 @@
-import ManageableItem from "./ManageableItem.js";
+import DashboardItem from "./DashboardItem.js";
 
-class Folder extends ManageableItem {
+class Folder extends DashboardItem {
     #children = [];
 
     constructor(name, backgroundColor, children) {

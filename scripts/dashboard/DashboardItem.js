@@ -1,13 +1,13 @@
-class ManageableItem {
+class DashboardItem {
     static #items = [];
     static #currentId = 0;
     #parent;
     #id;
 
     constructor() {
-        ManageableItem.#items.push(this);
-        this.#id = ManageableItem.#currentId;
-        ManageableItem.#currentId++;
+        DashboardItem.#items.push(this);
+        this.#id = DashboardItem.#currentId;
+        DashboardItem.#currentId++;
     }
 
     setParent(parent) {
@@ -23,8 +23,8 @@ class ManageableItem {
     }
 
     static getById(id) {
-        return ManageableItem.#items.find(item => item.getId() === id);
+        return DashboardItem.#items.find(item => item.getId() === id);
     }
 }
 
-export default ManageableItem;
+export default DashboardItem;

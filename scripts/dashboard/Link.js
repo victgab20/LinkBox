@@ -1,6 +1,6 @@
-import ManageableItem from "./ManageableItem.js";
+import DashboardItem from "./DashboardItem.js";
 
-class Link extends ManageableItem {
+class Link extends DashboardItem {
     constructor(title, url, backgroundColor) {
         super();
         this.title = title;

@@ -379,7 +379,7 @@ const createFolder = () => {
     return new Folder(folderInfo.name);
 }
 
-const createManageableItem = (itemType) => {
+const createDashboardItem = (itemType) => {
     const creationStrategy = {
         link: createLink,
         folder: createFolder,
@@ -431,8 +431,8 @@ const doubleClickCardFn = card => {
     }
 }
 
-const addManageableItemToUI = (itemType, newItem) => {
-    newItem = newItem ?? createManageableItem(itemType);
+const addDashboardItemToUI = (itemType, newItem) => {
+    newItem = newItem ?? createDashboardItem(itemType);
 
     if (newItem) {
         const dashboardManager = DashboardManager.getInstance();
@@ -472,7 +472,7 @@ export const removeCardFromUI = (card) => {
     }))
 }
 
-const removeManageableItemFromUI = (item) => {
+const removeDashboardItemFromUI = (item) => {
     const card = getCardFromItem(item);
 
     if (card) {
@@ -480,9 +480,9 @@ const removeManageableItemFromUI = (item) => {
     }
 }
 
-export const addLinkToUI = (link) => addManageableItemToUI("link", link);
+export const addLinkToUI = (link) => addDashboardItemToUI("link", link);
 
-export const addFolderToUI = (folder) => addManageableItemToUI("folder", folder);
+export const addFolderToUI = (folder) => addDashboardItemToUI("folder", folder);
 
 export const addItemToUI = (item) => {
     if (getItemType(item) === "link") {
@@ -492,7 +492,7 @@ export const addItemToUI = (item) => {
     }
 }
 
-export const removeItemFromUI = removeManageableItemFromUI;
+export const removeItemFromUI = removeDashboardItemFromUI;
 
 export const onResize = _ => {
     getAllCards().forEach(card => {
