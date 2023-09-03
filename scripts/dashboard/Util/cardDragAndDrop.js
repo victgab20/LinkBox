@@ -1,4 +1,4 @@
-import DashboardState from "../DashboardState.js";
+import DashboardManager from "../DashboardManager.js";
 import * as util from "../util.js";
 
 const CARD_CENTER_MAX_OFFSET = 0.2;
@@ -57,7 +57,7 @@ const listenerFns = {
         draggedCards.forEach((draggedCard, idx, allDraggedCards) => {
             let where, baseCard, baseItem, newItemIdx;
             const draggedItem = util.getItemFromCard(draggedCard);
-            const currentFolder = DashboardState.getInstance().getCurrentFolder();
+            const currentFolder = DashboardManager.getInstance().getCurrentFolder();
 
             if (positionRelativeToCenter === "above") {
                 where = "beforebegin";
@@ -244,7 +244,7 @@ const addDragOverClass = (card, { positionRelativeToCenter, isPositionCloseToCen
 
 const moveCardToAnotherFolder = (card, folder) => {
     const item = util.getItemFromCard(card);
-    const currentFolder = DashboardState.getInstance().getCurrentFolder();
+    const currentFolder = DashboardManager.getInstance().getCurrentFolder();
     currentFolder.moveChildToAnotherFolder(item, folder);
     util.removeCardFromUI(card);
 }

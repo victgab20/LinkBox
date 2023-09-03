@@ -5,7 +5,7 @@ import ButtonCut from "./Button/ButtonCut.js";
 import ButtonDelete from "./Button/ButtonDelete.js";
 import ButtonEdit from "./Button/ButtonEdit.js";
 import ButtonSelect from "./Button/ButtonSelect.js";
-import DashboardState from "./DashboardState.js";
+import DashboardManager from "./DashboardManager.js";
 import Folder from "./Folder.js";
 import Link from "./Link.js";
 import { addDragAndDropListenersToCard } from "./Util/cardDragAndDrop.js";
@@ -272,7 +272,7 @@ const createBtnsContainer = (parentCardType, buttons) => {
         btnsContainer.appendChild(btn)
     })
 
-    if (DashboardState.getInstance().isInSmallScreenWidth()) {
+    if (DashboardManager.getInstance().isInSmallScreenWidth()) {
         showElement(btnsContainer);
     } else {
         hideElement(btnsContainer);
@@ -338,8 +338,8 @@ const addCardEventListeners = card => {
 
 const createItemCardFactory = (itemType, item) => {
     return () => {
-        const dashboardState = DashboardState.getInstance()
-        const isInSmallScreenWidth = dashboardState.isInSmallScreenWidth();
+        const dashboardManager = DashboardManager.getInstance()
+        const isInSmallScreenWidth = dashboardManager.isInSmallScreenWidth();
         const card = document.createElement("div");
         card.className = `${itemType}-card`;
         card.style.backgroundColor = item.backgroundColor;
@@ -409,8 +409,8 @@ export const dispatchCardEvent = event => {
 }
 
 const openFolder = folder => {
-    const dashboardState = DashboardState.getInstance();
-    dashboardState.setCurrentFolder(folder)
+    const dashboardManager = DashboardManager.getInstance();
+    dashboardManager.setCurrentFolder(folder)
 }
 
 const openLinkInNewTab = ({ url }) => {
@@ -435,8 +435,8 @@ const addManageableItemToUI = (itemType, newItem) => {
     newItem = newItem ?? createManageableItem(itemType);
 
     if (newItem) {
-        const dashboardState = DashboardState.getInstance();
-        const currentFolder = dashboardState.getCurrentFolder();
+        const dashboardManager = DashboardManager.getInstance();
+        const currentFolder = dashboardManager.getCurrentFolder();
 
         if (!currentFolder.contains(newItem)) {
             currentFolder.addChild(newItem);
@@ -496,7 +496,7 @@ export const removeItemFromUI = removeManageableItemFromUI;
 
 export const onResize = _ => {
     getAllCards().forEach(card => {
-        const isInSmallScreenWidth = DashboardState.getInstance().isInSmallScreenWidth();
+        const isInSmallScreenWidth = DashboardManager.getInstance().isInSmallScreenWidth();
 
         const customEvent = new CustomEvent(
             isInSmallScreenWidth ?
@@ -549,12 +549,12 @@ export const onCardAdded = event => {
 }
 
 export const goToParentFolderIfItExists = () => {
-    const dashboardState = DashboardState.getInstance();
-    const currentFolder = dashboardState.getCurrentFolder();
+    const dashboardManager = DashboardManager.getInstance();
+    const currentFolder = dashboardManager.getCurrentFolder();
     const parent = currentFolder.getParent();
 
     if (parent) {
-        dashboardState.setCurrentFolder(parent);
+        dashboardManager.setCurrentFolder(parent);
     }
 }
 
@@ -570,18 +570,18 @@ export const add = () => {
 
 export const copy = () => {
     const items = getSelectedItemsAndCancelCopyOrCut();
-    DashboardState.getInstance().setCopied(items);
+    DashboardManager.getInstance().setCopied(items);
 }
 
 export const cut = () => {
     const items = getSelectedItemsAndCancelCopyOrCut();
-    DashboardState.getInstance().setCut(items);
+    DashboardManager.getInstance().setCut(items);
 }
 
 export const paste = () => {
-    const dashboardState = DashboardState.getInstance();
-    const copied = dashboardState.getCopied().map(item => item.clone());
-    const cut = dashboardState.getCut();
+    const dashboardManager = DashboardManager.getInstance();
+    const copied = dashboardManager.getCopied().map(item => item.clone());
+    const cut = dashboardManager.getCut();
 
     if (copied.length > 0) {
         copied.forEach(addItemToUI)
@@ -608,16 +608,16 @@ const showCancelPasteAndPasteBtns = () => {
 }
 
 export const onCancelCut = () => {
-    const currentFolder = DashboardState.getInstance().getCurrentFolder();
+    const currentFolder = DashboardManager.getInstance().getCurrentFolder();
     getAllCards().forEach(removeCardFromUI);
     currentFolder.getChildren().forEach(addItemToUI);
     hideCancelPasteAndPasteBtns();
 }
 
 export const cancelCopyAndCut = () => {
-    const dashboardState = DashboardState.getInstance();
-    dashboardState.cancelCopy();
-    dashboardState.cancelCut();
+    const dashboardManager = DashboardManager.getInstance();
+    dashboardManager.cancelCopy();
+    dashboardManager.cancelCut();
 }
 
 export const getSelectedItemsAndCancelCopyOrCut = () => {
@@ -686,7 +686,7 @@ const restoreOriginalCardsFooterBtnContainer = cardsFooter => {
 
 export const updateCardsFooter = () => {
     const cardsFooter = document.querySelector(".cards-footer");
-    const isInSmallScreenWidth = DashboardState.getInstance().isInSmallScreenWidth();
+    const isInSmallScreenWidth = DashboardManager.getInstance().isInSmallScreenWidth();
     const selectedCards = getSelectedCards();
     const textSelectedCards = cardsFooter.querySelector(".text-selected-cards")
     const AmountOfSelectedCards = selectedCards.length;

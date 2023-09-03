@@ -1,5 +1,5 @@
 import Button from "../Button.js";
-import DashboardState from "../DashboardState.js";
+import DashboardManager from "../DashboardManager.js";
 
 class ButtonCopy extends Button {
     constructor() {
@@ -7,8 +7,8 @@ class ButtonCopy extends Button {
     }
 
     onClick() {
-        const dashboardState = DashboardState.getInstance();
-        dashboardState.setCopied([this.getAssociatedItem()]);
+        const dashboardManager = DashboardManager.getInstance();
+        dashboardManager.setCopied([this.getAssociatedItem()]);
     }
 }
 

@@ -1,5 +1,5 @@
 import Button from "../Button.js";
-import DashboardState from "../DashboardState.js";
+import DashboardManager from "../DashboardManager.js";
 
 class ButtonCut extends Button {
     constructor() {
@@ -8,10 +8,10 @@ class ButtonCut extends Button {
 
     onClick() {
         const item = this.getAssociatedItem();
-        const dashboardState = DashboardState.getInstance();
-        dashboardState.cancelCopy();
-        dashboardState.cancelCut();
-        dashboardState.setCut([item]);
+        const dashboardManager = DashboardManager.getInstance();
+        dashboardManager.cancelCopy();
+        dashboardManager.cancelCut();
+        dashboardManager.setCut([item]);
     }
 }
 
