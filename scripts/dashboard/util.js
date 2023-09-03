@@ -272,7 +272,7 @@ const createBtnsContainer = (parentCardType, buttons) => {
         btnsContainer.appendChild(btn)
     })
 
-    if (new DashboardState().isInSmallScreenWidth()) {
+    if (DashboardState.getInstance().isInSmallScreenWidth()) {
         showElement(btnsContainer);
     } else {
         hideElement(btnsContainer);
@@ -338,7 +338,7 @@ const addCardEventListeners = card => {
 
 const createItemCardFactory = (itemType, item) => {
     return () => {
-        const dashboardState = new DashboardState()
+        const dashboardState = DashboardState.getInstance()
         const isInSmallScreenWidth = dashboardState.isInSmallScreenWidth();
         const card = document.createElement("div");
         card.className = `${itemType}-card`;
@@ -409,7 +409,7 @@ export const dispatchCardEvent = event => {
 }
 
 const openFolder = folder => {
-    const dashboardState = new DashboardState();
+    const dashboardState = DashboardState.getInstance();
     dashboardState.setCurrentFolder(folder)
 }
 
@@ -435,7 +435,7 @@ const addManageableItemToUI = (itemType, newItem) => {
     newItem = newItem ?? createManageableItem(itemType);
 
     if (newItem) {
-        const dashboardState = new DashboardState();
+        const dashboardState = DashboardState.getInstance();
         const currentFolder = dashboardState.getCurrentFolder();
 
         if (!currentFolder.contains(newItem)) {
@@ -496,7 +496,7 @@ export const removeItemFromUI = removeManageableItemFromUI;
 
 export const onResize = _ => {
     getAllCards().forEach(card => {
-        const isInSmallScreenWidth = new DashboardState().isInSmallScreenWidth();
+        const isInSmallScreenWidth = DashboardState.getInstance().isInSmallScreenWidth();
 
         const customEvent = new CustomEvent(
             isInSmallScreenWidth ?
@@ -549,7 +549,7 @@ export const onCardAdded = event => {
 }
 
 export const goToParentFolderIfItExists = () => {
-    const dashboardState = new DashboardState();
+    const dashboardState = DashboardState.getInstance();
     const currentFolder = dashboardState.getCurrentFolder();
     const parent = currentFolder.getParent();
 
@@ -570,16 +570,16 @@ export const add = () => {
 
 export const copy = () => {
     const items = getSelectedItemsAndCancelCopyOrCut();
-    new DashboardState().setCopied(items);
+    DashboardState.getInstance().setCopied(items);
 }
 
 export const cut = () => {
     const items = getSelectedItemsAndCancelCopyOrCut();
-    new DashboardState().setCut(items);
+    DashboardState.getInstance().setCut(items);
 }
 
 export const paste = () => {
-    const dashboardState = new DashboardState();
+    const dashboardState = DashboardState.getInstance();
     const copied = dashboardState.getCopied().map(item => item.clone());
     const cut = dashboardState.getCut();
 
@@ -608,14 +608,14 @@ const showCancelPasteAndPasteBtns = () => {
 }
 
 export const onCancelCut = () => {
-    const currentFolder = new DashboardState().getCurrentFolder();
+    const currentFolder = DashboardState.getInstance().getCurrentFolder();
     getAllCards().forEach(removeCardFromUI);
     currentFolder.getChildren().forEach(addItemToUI);
     hideCancelPasteAndPasteBtns();
 }
 
 export const cancelCopyAndCut = () => {
-    const dashboardState = new DashboardState();
+    const dashboardState = DashboardState.getInstance();
     dashboardState.cancelCopy();
     dashboardState.cancelCut();
 }
@@ -686,7 +686,7 @@ const restoreOriginalCardsFooterBtnContainer = cardsFooter => {
 
 export const updateCardsFooter = () => {
     const cardsFooter = document.querySelector(".cards-footer");
-    const isInSmallScreenWidth = new DashboardState().isInSmallScreenWidth();
+    const isInSmallScreenWidth = DashboardState.getInstance().isInSmallScreenWidth();
     const selectedCards = getSelectedCards();
     const textSelectedCards = cardsFooter.querySelector(".text-selected-cards")
     const AmountOfSelectedCards = selectedCards.length;

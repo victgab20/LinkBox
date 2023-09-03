@@ -7,7 +7,7 @@ class ButtonCopy extends Button {
     }
 
     onClick() {
-        const dashboardState = new DashboardState();
+        const dashboardState = DashboardState.getInstance();
         dashboardState.setCopied([this.getAssociatedItem()]);
     }
 }

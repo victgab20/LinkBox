@@ -1,18 +1,31 @@
 import Folder from "./Folder.js";
 
 class DashboardState {
+  static #isInternalConstructing = false;
   #cut = [];
   #copied = [];
   #previousFolder;
   #currentFolder;
 
   constructor() {
+    if (!DashboardState.#isInternalConstructing) {
+      const errorMessage = "Attempt to create or get singleton instance via constructor, use getInstance() instead";
+      throw new Error(errorMessage);
+    }
+
     if (!DashboardState.instance) {
       this.setCurrentFolder(new Folder());
       DashboardState.instance = this;
     }
 
+    DashboardState.#isInternalConstructing = false;
+
     return DashboardState.instance;
+  }
+
+  static getInstance() {
+    DashboardState.#isInternalConstructing = true;
+    return new DashboardState();
   }
 
   isInSmallScreenWidth() {

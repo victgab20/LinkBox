@@ -57,7 +57,7 @@ const listenerFns = {
         draggedCards.forEach((draggedCard, idx, allDraggedCards) => {
             let where, baseCard, baseItem, newItemIdx;
             const draggedItem = util.getItemFromCard(draggedCard);
-            const currentFolder = new DashboardState().getCurrentFolder();
+            const currentFolder = DashboardState.getInstance().getCurrentFolder();
 
             if (positionRelativeToCenter === "above") {
                 where = "beforebegin";
@@ -244,7 +244,7 @@ const addDragOverClass = (card, { positionRelativeToCenter, isPositionCloseToCen
 
 const moveCardToAnotherFolder = (card, folder) => {
     const item = util.getItemFromCard(card);
-    const currentFolder = new DashboardState().getCurrentFolder();
+    const currentFolder = DashboardState.getInstance().getCurrentFolder();
     currentFolder.moveChildToAnotherFolder(item, folder);
     util.removeCardFromUI(card);
 }
