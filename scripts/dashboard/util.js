@@ -155,6 +155,12 @@ export const updateCard = card => {
     }
 }
 
+const inputItemTypeChoice = () => {
+    const promptLines = "O que você quer adicionar?\n1 - Pasta\n2 - Link"
+    const answer = prompt(promptLines)
+    return ["folder", "link"][answer - 1]
+}
+
 export const inputFolderInfo = (defaultName) => {
     const name = prompt("Nome: ", defaultName);
     if (!name.trim()) return null;
@@ -487,3 +493,236 @@ export const addItemToUI = (item) => {
 }
 
 export const removeItemFromUI = removeManageableItemFromUI;
+
+export const onResize = _ => {
+    getAllCards().forEach(card => {
+        const isInSmallScreenWidth = new DashboardState().isInSmallScreenWidth();
+
+        const customEvent = new CustomEvent(
+            isInSmallScreenWidth ?
+            "custom:disableToggleBtnsBasedOnHover" :
+            "custom:enableToggleBtnsBasedOnHover"
+        );
+
+        card.dispatchEvent(customEvent);
+        updateCardsFooter();
+    })
+}
+
+export const onCurrentFolderChanged = event => {
+    const goBackBtn = document.querySelector(".go-back-btn");
+    const { currentFolder } = event.detail;
+    const childItems = currentFolder.getChildren();
+    const allCards = getAllCards();
+
+    allCards.forEach(removeCardFromUI);
+    childItems.forEach(addItemToUI);
+
+    if (currentFolder.isRoot()) {
+        hideElement(goBackBtn)
+    } else {
+        showElement(goBackBtn)
+    }
+
+    const folderName = currentFolder.name;
+    const folderNameElement = document.querySelector(".current-folder-name");
+
+    if (folderName) {
+        folderNameElement.textContent = currentFolder.name;
+        showElement(folderNameElement)
+    } else {
+        folderNameElement.textContent = "";
+        hideElement(folderNameElement)
+    }
+}
+
+export const onCardAdded = event => {
+    const emptyFolderMessage = document.querySelector(".empty-folder-message");
+    hideElement(emptyFolderMessage);
+    showElement(getCardsContainer());
+    const { card: clickedCard } = event.detail;
+
+    clickedCard.addEventListener("click", () => {
+        unselectAllCards();
+        selectCard(clickedCard);
+    })
+}
+
+export const goToParentFolderIfItExists = () => {
+    const dashboardState = new DashboardState();
+    const currentFolder = dashboardState.getCurrentFolder();
+    const parent = currentFolder.getParent();
+
+    if (parent) {
+        dashboardState.setCurrentFolder(parent);
+    }
+}
+
+export const add = () => {
+    const itemType = inputItemTypeChoice();
+
+    if (itemType === "folder") {
+        addFolderToUI();
+    } else if (itemType === "link") {
+        addLinkToUI();
+    }
+}
+
+export const copy = () => {
+    const items = getSelectedItemsAndCancelCopyOrCut();
+    new DashboardState().setCopied(items);
+}
+
+export const cut = () => {
+    const items = getSelectedItemsAndCancelCopyOrCut();
+    new DashboardState().setCut(items);
+}
+
+export const paste = () => {
+    const dashboardState = new DashboardState();
+    const copied = dashboardState.getCopied().map(item => item.clone());
+    const cut = dashboardState.getCut();
+
+    if (copied.length > 0) {
+        copied.forEach(addItemToUI)
+    } else {
+        cut.forEach(item => {
+            item.getParent().removeChild(item);
+            addItemToUI(item);
+        })
+    }
+}
+
+const hideCancelPasteAndPasteBtns = () => {
+    const cancelPasteBtn = document.querySelector(".cancel-paste-btn");
+    const pasteBtn = document.querySelector(".paste-btn");
+    hideElement(cancelPasteBtn);
+    hideElement(pasteBtn);
+}
+
+const showCancelPasteAndPasteBtns = () => {
+    const cancelPasteBtn = document.querySelector(".cancel-paste-btn");
+    const pasteBtn = document.querySelector(".paste-btn");
+    showElement(cancelPasteBtn);
+    showElement(pasteBtn);
+}
+
+export const onCancelCut = () => {
+    const currentFolder = new DashboardState().getCurrentFolder();
+    getAllCards().forEach(removeCardFromUI);
+    currentFolder.getChildren().forEach(addItemToUI);
+    hideCancelPasteAndPasteBtns();
+}
+
+export const cancelCopyAndCut = () => {
+    const dashboardState = new DashboardState();
+    dashboardState.cancelCopy();
+    dashboardState.cancelCut();
+}
+
+export const getSelectedItemsAndCancelCopyOrCut = () => {
+    const selectedCards = getSelectedCards();
+    const items = selectedCards.map(card => getItemFromCard(card));
+    cancelCopyAndCut();
+    return items;
+}
+
+export const onCardRemoved = (e) => {
+    if (e.detail.allCards.length == 0) {
+        const emptyFolderMessage = document.querySelector(".empty-folder-message");
+        showElement(emptyFolderMessage);
+        hideElement(getCardsContainer());
+    }
+
+    updateCardsFooter();
+}
+
+export const onCardUnselected = (e) => {
+    const { card } = e.detail;
+    card.classList.remove("card-selected");
+    updateCard(card);
+    updateCardsFooter();
+}
+
+export const onCardSelected = (e) => {
+    const { card } = e.detail;
+    card.style.backgroundColor = "";
+    card.classList.add("card-selected");
+    updateCardsFooter();
+}
+
+export const onCut = (e) => {
+    const { items } = e.detail;
+    const cards = items.map(getCardFromItem);
+    cards.forEach(removeCardFromUI);
+    showCancelPasteAndPasteBtns();
+}
+
+export const removeSelectedCardsAndItems = () => {
+    getSelectedCards().forEach(card => {
+        const item = getItemFromCard(card);
+        removeCardFromUI(card);
+        item.remove();
+    });
+}
+
+const originalCardsFooterBtnContainer = document.querySelector(".cards-footer-btn-container");
+
+const replaceCardsFooterBtnContainer = (cardsFooter, newBtnsContainer) => {
+    newBtnsContainer.classList.add("cards-footer-btn-container");
+    const cardsFooterBtnContainer = cardsFooter.querySelector(".cards-footer-btn-container");
+
+    if (cardsFooterBtnContainer === newBtnsContainer) {
+        return;
+    }
+
+    cardsFooter.appendChild(newBtnsContainer);
+    if (cardsFooterBtnContainer) cardsFooterBtnContainer.remove();
+}
+
+const restoreOriginalCardsFooterBtnContainer = cardsFooter => {
+    replaceCardsFooterBtnContainer(cardsFooter, originalCardsFooterBtnContainer);
+}
+
+export const updateCardsFooter = () => {
+    const cardsFooter = document.querySelector(".cards-footer");
+    const isInSmallScreenWidth = new DashboardState().isInSmallScreenWidth();
+    const selectedCards = getSelectedCards();
+    const textSelectedCards = cardsFooter.querySelector(".text-selected-cards")
+    const AmountOfSelectedCards = selectedCards.length;
+    textSelectedCards.textContent =
+        `${AmountOfSelectedCards} ${AmountOfSelectedCards === 1 ? "Selecionado" : "Selecionados"}`;
+
+    if (AmountOfSelectedCards > 1) {
+        restoreOriginalCardsFooterBtnContainer(cardsFooter);
+        showElement(cardsFooter);
+        return;
+    } else if (AmountOfSelectedCards === 0 || !isInSmallScreenWidth) {
+        restoreOriginalCardsFooterBtnContainer(cardsFooter);
+        hideElement(cardsFooter);
+        return;
+    }
+
+    const firstSelectedCard = cloneCard(selectedCards[0]);
+    firstSelectedCard.style.backgroundColor = "#00000000";
+    const dataContainer = firstSelectedCard.querySelector(".link-data-container, .folder-data-container");
+    hideElement(dataContainer);
+    const cardBtnsContainers = firstSelectedCard.querySelector(".btns-container");
+    showCardBtns(cardBtnsContainers);
+    hideCardBtns(cardBtnsContainers, btn => btn.classList.contains("select-btn"));
+    replaceCardsFooterBtnContainer(cardsFooter, firstSelectedCard);
+    showElement(cardsFooter);
+}
+
+export const onCancelCopy = hideCancelPasteAndPasteBtns;
+
+export const onPaste = hideCancelPasteAndPasteBtns;
+
+export const onCopied = showCancelPasteAndPasteBtns;
+
+export const onCardsContainerClick = (e) => {
+    const element = e.target;
+    if (!elementIsCard(element)) {
+        unselectAllCards();
+    }
+}
