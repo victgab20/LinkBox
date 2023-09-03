@@ -6,7 +6,7 @@ import ButtonDelete from "./Button/ButtonDelete.js";
 import ButtonEdit from "./Button/ButtonEdit.js";
 import ButtonSelect from "./Button/ButtonSelect.js";
 import DashboardManager from "./DashboardManager.js";
-import Folder from "./Folder.js";
+import DashboardFolder from "./DashboardFolder.js";
 import Link from "./Link.js";
 import { addDragAndDropListenersToCard } from "./Util/cardDragAndDrop.js";
 
@@ -99,13 +99,13 @@ export const getCardType = card => card.classList.contains("link-card") ? "link"
 export const getItemFromCard = card => {
     const type = getCardType(card);
     const id = parseInt(card.getAttribute(`data-${type}-id`));
-    const item = type === "folder" ? Folder.getById(id) : Link.getById(id);
+    const item = type === "folder" ? DashboardFolder.getById(id) : Link.getById(id);
     return item;
 }
 
 export const getItemFromId = (itemType, id) => {
     if (itemType === "folder") {
-        return Folder.getById(id);
+        return DashboardFolder.getById(id);
     } else {
         return Link.getById(id);
     }
@@ -376,7 +376,7 @@ const createFolder = () => {
     const folderInfo = inputFolderInfo();
     if (!folderInfo) return null;
 
-    return new Folder(folderInfo.name);
+    return new DashboardFolder(folderInfo.name);
 }
 
 const createDashboardItem = (itemType) => {
@@ -465,7 +465,7 @@ export const removeCardFromUI = (card) => {
     container.replaceChildren(...filteredContainerChildren);
     const cardType = getCardType(card);
     const id = parseInt(card.getAttribute(`data-${cardType}-id`));
-    const item = cardType == "link" ? Link.getById(id) : Folder.getById(id)
+    const item = cardType == "link" ? Link.getById(id) : DashboardFolder.getById(id)
 
     dispatchCardEvent(new CustomEvent("custom:cardRemoved", {
         detail: { type: cardType, item, card, allCards: getAllCards() }

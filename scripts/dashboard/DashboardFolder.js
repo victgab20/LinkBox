@@ -1,6 +1,6 @@
 import DashboardItem from "./DashboardItem.js";
 
-class Folder extends DashboardItem {
+class DashboardFolder extends DashboardItem {
     #children = [];
 
     constructor(name, backgroundColor, children) {
@@ -15,7 +15,7 @@ class Folder extends DashboardItem {
     }
 
     clone() {
-        const clonedFolder = new Folder(this.name, this.backgroundColor, this.getChildren());
+        const clonedFolder = new DashboardFolder(this.name, this.backgroundColor, this.getChildren());
         clonedFolder.setParent(this.getParent());
         return clonedFolder;
     }
@@ -79,4 +79,4 @@ class Folder extends DashboardItem {
     }
 }
 
-export default Folder;
+export default DashboardFolder;

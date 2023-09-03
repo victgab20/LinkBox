@@ -1,4 +1,4 @@
-import Folder from "./Folder.js";
+import DashboardFolder from "./DashboardFolder.js";
 
 class DashboardManager {
   static #isInternalConstructing = false;
@@ -15,7 +15,7 @@ class DashboardManager {
     }
 
     if (!DashboardManager.instance) {
-      this.setCurrentFolder(new Folder());
+      this.setCurrentFolder(new DashboardFolder());
       DashboardManager.instance = this;
     }
 
