@@ -7,7 +7,7 @@ import ButtonEdit from "./Button/ButtonEdit.js";
 import ButtonSelect from "./Button/ButtonSelect.js";
 import DashboardManager from "./DashboardManager.js";
 import DashboardFolder from "./DashboardFolder.js";
-import Link from "./Link.js";
+import DashboardLink from "./DashboardLink.js";
 import { addDragAndDropListenersToCard } from "./Util/cardDragAndDrop.js";
 
 export const cloneCard = card => {
@@ -28,7 +28,7 @@ export const showElement = (element) => { removeClass(element, "hidden") };
 
 export const hideElement = (element) => { addClass(element, "hidden") };
 
-export const getItemType = item => item instanceof Link ? "link" : "folder";
+export const getItemType = item => item instanceof DashboardLink ? "link" : "folder";
 
 const traverseAncestors = (element, predicate) => {
     let ancestor = element;
@@ -99,7 +99,7 @@ export const getCardType = card => card.classList.contains("link-card") ? "link"
 export const getItemFromCard = card => {
     const type = getCardType(card);
     const id = parseInt(card.getAttribute(`data-${type}-id`));
-    const item = type === "folder" ? DashboardFolder.getById(id) : Link.getById(id);
+    const item = type === "folder" ? DashboardFolder.getById(id) : DashboardLink.getById(id);
     return item;
 }
 
@@ -107,7 +107,7 @@ export const getItemFromId = (itemType, id) => {
     if (itemType === "folder") {
         return DashboardFolder.getById(id);
     } else {
-        return Link.getById(id);
+        return DashboardLink.getById(id);
     }
 }
 
@@ -369,7 +369,7 @@ const createLink = () => {
     const linkInfo = inputLinkInfo();
     if (!linkInfo) return null;
 
-    return new Link(linkInfo.title, linkInfo.url);
+    return new DashboardLink(linkInfo.title, linkInfo.url);
 }
 
 const createFolder = () => {
@@ -465,7 +465,7 @@ export const removeCardFromUI = (card) => {
     container.replaceChildren(...filteredContainerChildren);
     const cardType = getCardType(card);
     const id = parseInt(card.getAttribute(`data-${cardType}-id`));
-    const item = cardType == "link" ? Link.getById(id) : DashboardFolder.getById(id)
+    const item = cardType == "link" ? DashboardLink.getById(id) : DashboardFolder.getById(id)
 
     dispatchCardEvent(new CustomEvent("custom:cardRemoved", {
         detail: { type: cardType, item, card, allCards: getAllCards() }
